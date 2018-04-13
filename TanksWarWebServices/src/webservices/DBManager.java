@@ -32,19 +32,17 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
-	public List<Student> getStudentList() {
+	public List<Users> getUsersList() {
 		try (Statement st = conn.createStatement()) {
-			List<Student> studentList = new ArrayList<Student>();
-			st.execute("select * from Student");
+			List<Users>  usersList= new ArrayList<Users>();
+			st.execute("select * from Users");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Student student = new Student(rs.getInt("nr_matricol"),
-					rs.getString("nume"), rs.getString("facultate"),
-					rs.getInt("an"), rs.getInt("nota"));
-				studentList.add(student);
+				Users user = new Users(rs.getString("username"),rs.getString("password"));
+				usersList.add(user);
 			}
 			// st.close();
-			return studentList;
+			return usersList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
