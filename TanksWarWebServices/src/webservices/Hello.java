@@ -31,7 +31,7 @@ public class Hello {
 	public String sayHtmlHello() {
 		//return "<html> " + "<title>" + "Hello Jersey" + "</title>"
 		//		+ "<body><h1>" + "Hello Jersey" + "</h1></body>" + "</html> ";
-		return "<html> " + "<title>" + "Hello Jersey" + "</title>" + "<body><h1>" + "Hello Jersey" + "</h1>" + DBManager.getInstance().getStudentList().toString() + "</body>" + "</html> ";
+		return "<html> " + "<title>" + "Hello Jersey" + "</title>" + "<body><h1>" + "Hello Jersey, i m here" + "</h1>" + DBManager.getInstance().getUsersList().toString() + "</body>" + "</html> ";
 	}
 
 }
