@@ -4,6 +4,7 @@ import java.net.URI;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,20 +18,12 @@ public class ClientTest {
 		Client client = ClientBuilder.newClient(config);
 
 		WebTarget target = client.target(getBaseURI());
-
-		// rest  -> numele specificat in fisierul web.xml de la server in interiorul tag-ului url-pattern
-		// hello -> numele specificat in fisierul Hello.java la adnotarea @Path
-		System.out.println(target.path("rest").path("hello").request()
-			.accept(MediaType.TEXT_PLAIN).get(Response.class).toString());
-
-		System.out.println(target.path("rest").path("hello").request()
-			.accept(MediaType.TEXT_PLAIN).get(String.class));
-
-		System.out.println(target.path("rest").path("hello").request()
-			.accept(MediaType.TEXT_XML).get(String.class));
-
-		System.out.println(target.path("rest").path("hello").request()
-			.accept(MediaType.TEXT_HTML).get(String.class));
+		
+		String accArray="tank"+"tank"; // username + password 
+		
+		System.out.println(target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
+				.post(Entity.entity(accArray,MediaType.TEXT_PLAIN),Boolean.class));
+		
 	}
 
 	private static URI getBaseURI() {
