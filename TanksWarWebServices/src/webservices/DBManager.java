@@ -38,7 +38,7 @@ public class DBManager {
 			st.execute("select * from Users");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Users user = new Users(rs.getString("username"),rs.getString("password"));
+				Users user = new Users(rs.getInt("id"),rs.getString("username"),rs.getString("password"));
 				usersList.add(user);
 			}
 			// st.close();

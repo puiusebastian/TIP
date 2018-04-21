@@ -1,12 +1,13 @@
 package webservices;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.GET;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -16,13 +17,17 @@ import javax.ws.rs.core.MediaType;
 public class CheckUserWS {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean checkUser( String acc)
+	public Boolean checkUser( String acc)
 	{
+		JsonObject jsonObject=Json.createReader(new StringReader(acc)).readObject();
+		String user=jsonObject.getString("username");
+		String pass=jsonObject.getString("password");
+		
 		List<Users> players=new ArrayList<Users>();
 		players=DBManager.getInstance().getUsersList();
 		for(Users player:players)
 		{
-			if(acc.equals(player.getUsername()+player.getPassword()))
+			if(user.equals(player.getUsername()) && pass.equals(player.getPassword()))
 			{
 				return true; //exista utilizatorul cu datele de logare acc
 			}

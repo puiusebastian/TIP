@@ -34,5 +34,6 @@
 	<classpathentry kind="lib" path="lib/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.1.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/yasson-1.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TanksWarWebServices"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
