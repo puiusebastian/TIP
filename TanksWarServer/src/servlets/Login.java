@@ -5,9 +5,11 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -43,19 +45,31 @@ public class Login extends HttpServlet {
 	          
 	    String n=request.getParameter("username");  
 	    String p=request.getParameter("userpass");  
+	    String user_pass = "{\"username\":\""+n+"\",\"password\":\""+p+"\"}";
 	          	             
 	    ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 	    
 	    WebTarget target = client.target(getBaseURI());
-		
+	    		
 		boolean responseFromRest=target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
-				.post(Entity.entity(n+p,MediaType.TEXT_PLAIN),Boolean.class);
+				.post(Entity.entity(user_pass,MediaType.TEXT_PLAIN),Boolean.class);
 		
-		if(responseFromRest)
+		
+		
+		if(responseFromRest) {
 			System.out.println("Successful login");
-		else
+			HttpSession session = request.getSession();
+			System.out.println(n);
+			session.setAttribute("user", n);
+			//setting session to expiry in 30 mins
+			session.setMaxInactiveInterval(30*60);
+			response.sendRedirect("index.jsp");
+		}
+		else {
 			System.out.println("Not really Successful login");
+			response.sendRedirect("login.jsp");
+		}
 	    
 	}
 
