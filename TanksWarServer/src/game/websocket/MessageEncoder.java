@@ -16,13 +16,22 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     			.add("index", messages[0].getIndex())
     			.add("numberOfPlayers", messages[0].getNumberOfPlayers())
     			.add("numberOfMissiles", messages[0].getNumberOfMissiles())
+    			.add("tileSize", messages[0].getTileSize())
+    			.add("missileSize", messages[0].getMissileSize())
+    			.add("roundTimeElapsed", messages[0].getRoundTimeElapsed())
+    			.add("roundNumber", messages[0].getRoundNumber())
+    			.add("firstTeamScore", messages[0].getFirstTeamScore())
+    			.add("secondTeamScore", messages[0].getSecondTeamScore())
+    			.add("playerWindowWidth", messages[0].getPlayerWindowWidth())
+    			.add("playerWindowHeight", messages[0].getPlayerWindowHeight())
     			);
-    	
     	
     	for(int i = 1; i < messages.length; ++i) {
     		objectBuilder.add("posX", messages[i].getPosX());
     		objectBuilder.add("posY", messages[i].getPosY());
     		if(messages[i].getMovementDirection() != null) {
+    			objectBuilder.add("team", messages[i].getTeam());
+    			objectBuilder.add("alive", messages[i].getAlive());
     			objectBuilder.add("movementDirection", messages[i].getMovementDirection());
     		}
     		arrayBuilder.add(objectBuilder);

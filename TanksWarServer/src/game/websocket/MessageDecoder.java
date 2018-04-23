@@ -1,7 +1,6 @@
 package game.websocket;
 
 import java.io.StringReader;
-import java.util.Date;
 
 import javax.json.*;
 import javax.websocket.DecodeException;

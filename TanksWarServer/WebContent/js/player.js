@@ -2,12 +2,14 @@
  * 
  */
 
-function Player(imageSrc, posX, posY) {
+function Player(imageSrc, posX, posY, team) {
 	this.image = new Image();
 	this.image.src = imageSrc;
 
 	this.x = posX;
 	this.y = posY;
+	
+	this.team = team;
 
 	this.alive = true;
 
@@ -38,7 +40,8 @@ Player.prototype.draw = function() {
 				coords = getGraphicElement("vertical_walk_up_3");
 			}*/
 			
-			coords = [2, 0, 29, 31];
+			//coords = [2, 0, 29, 31];
+			coords = getGraphicElementCoords("tank_move_up");
 			break;
 		case "right":
 			/*if(this.animation["right"] <= this.timeBetweenAnimStates) {
@@ -51,7 +54,8 @@ Player.prototype.draw = function() {
 				coords = getGraphicElement("horizontal_walk_right_3");
 			}*/
 			
-			coords = [0, 98, 31, 29];
+			//coords = [0, 98, 31, 29];
+			coords = getGraphicElementCoords("tank_move_right");
 			break;
 		case "down":
 			/*if(this.animation["down"] <= this.timeBetweenAnimStates) {
@@ -64,7 +68,8 @@ Player.prototype.draw = function() {
 				coords = getGraphicElement("vertical_walk_down_3");
 			}*/
 			
-			coords = [2, 33, 29, 31];
+			//coords = [2, 33, 29, 31];
+			coords = getGraphicElementCoords("tank_move_down");
 			break;
 		case "left":
 			/*if(this.animation["left"] <= this.timeBetweenAnimStates) {
@@ -77,17 +82,18 @@ Player.prototype.draw = function() {
 				coords = getGraphicElement("horizontal_walk_left_3");
 			}*/
 			
-			coords = [0, 66, 31, 29];
+			//coords = [0, 66, 31, 29];
+			coords = getGraphicElementCoords("tank_move_left");
 			break;
 	}
 
-	var blockSize = 30;
 	// Determine the character's dimensions
-	var width = blockSize;
-	var height = (coords[3] * blockSize) / coords[2];
+	var width = tileSize;
+	var height = (coords[3] * tileSize) / coords[2];
 	// Determine the character's position
-	var posX = this.x;
-	var posY = this.y - (height - blockSize);
+	var posX = this.x - (players[playerIndex].x + tileSize/2) + boardWidth/2;
+	var posY = this.y - (players[playerIndex].y + tileSize/2) + boardHeight/2;
+	//var posY = this.y - (height - tileSize) - (players[playerIndex].y + tileSize/2) + boardHeight/2;
 	// Draw the character
 	canvasContext.drawImage(this.image, coords[0], coords[1], coords[2], coords[3], posX, posY, width, height);
 	

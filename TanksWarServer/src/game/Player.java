@@ -11,17 +11,26 @@ public class Player {
 	public boolean moveLeft;
 	public boolean moveRight;
 	public String movementBuffer;
+	private int team;
+	private boolean alive;
 	
-	public Player(int x, int y) {
+	public Player(int x, int y, int team) {
 		this.posX = x;
 		this.posY = y;
-		this.movementDirection = "up";
+		this.team = team;
+		if(team == 1) {
+			this.movementDirection = "right";
+		}
+		else if(team == 2) {
+			this.movementDirection = "left";
+		}
 		this.speed = 2;
 		this.movementBuffer = "none";
 		this.moveUp = false;
 		this.moveDown = false;
 		this.moveLeft = false;
 		this.moveRight = false;
+		this.alive = true;
 	}
 	
 	public int getPosX() {
@@ -46,6 +55,22 @@ public class Player {
 
 	public void setMovementDirection(String movementDirection) {
 		this.movementDirection = movementDirection;
+	}
+	
+	public int getTeam() {
+		return team;
+	}
+	
+	public void setTeam(int team) {
+		this.team = team;
+	}
+	
+	public boolean isAlive() {
+		return alive;
+	}
+	
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 	
 	public void Update() {
