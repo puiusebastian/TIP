@@ -10,9 +10,9 @@
 
 a{
     height: 55px;
-    padding:30px;
+    padding:18px;
     color: #88421D;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 li{
@@ -29,4 +29,8 @@ a:hover{
     padding-top: 15px;
     font-size: 20px !important;
     color: #88421D;
+}
+
+.glyphicon-home{
+    font-size: 27px;
 }
