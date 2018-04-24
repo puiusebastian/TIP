@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.title-bar{
+    font-size: 35px;
+    height: 100px;
+}
+
+.container-fluid{
+ 
+}
+
+a{
+    height: 55px;
+    padding:30px;
+    color: #88421D;
+    text-decoration: none;
+}
+
+li{
+    padding-top: 18px;
+  	margin: 0 0 30px 0;
+}
+
+a:hover{
+    border-top:2px solid #88421D;
+    border-bottom:2px solid #88421D;
+}
+
+.navbar-right{
+    padding-top: 15px;
+    font-size: 20px !important;
+    color: #88421D;
+}

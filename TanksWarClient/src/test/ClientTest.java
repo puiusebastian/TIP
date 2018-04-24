@@ -26,7 +26,8 @@ public class ClientTest {
 		
 
 		WebTarget target = client.target(getBaseURI());
-		
+		System.out.println(target.path("api").path("checkuser").request().accept(MediaType.TEXT_PLAIN).get(String.class));
+	/*	
 		String accArray="{\"username\":\"tank\",\"password\":\"tank\"}"; // {"username":"wanted username","password":"wanted password"}  
 		
 		//check if user "tank" with password "tank" exists
@@ -44,10 +45,10 @@ public class ClientTest {
 			JsonObject user=users.getJsonObject(i);
 			System.out.println(user.getString("username")); //display by JsonObject
 		}
-		
+		*/
 	}
 
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8888/").build();
+		return UriBuilder.fromUri("http://localhost:8080/").build();
 	}
 }
