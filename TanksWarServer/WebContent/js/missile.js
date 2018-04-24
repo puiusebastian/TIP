@@ -11,7 +11,10 @@ function Missile(imageSrc, posX, posY) {
 }
 
 Missile.prototype.draw = function() {
-	var coords = [344, 88, 16, 16];
+	var coords = getGraphicElementCoords("missile");
 	
-	canvasContext.drawImage(this.image, coords[0], coords[1], coords[2], coords[3], this.x, this.y, 10, 10);
+	var posX = this.x - (players[playerIndex].x + tileSize/2) + boardWidth/2;
+	var posY = this.y - (players[playerIndex].y + tileSize/2) + boardHeight/2;
+	
+	canvasContext.drawImage(this.image, coords[0], coords[1], coords[2], coords[3], posX, posY, missileSize, missileSize);
 }

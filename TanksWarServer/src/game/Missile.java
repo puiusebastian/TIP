@@ -1,8 +1,10 @@
 package game;
 
+import javax.websocket.Session;
+
 public class Missile {
 	
-	private String playerId;
+	private Session playerId;
 	private int posX;
 	private int posY;
 	private int maxDistance;
@@ -11,7 +13,7 @@ public class Missile {
 	private int speed;
 	private boolean exploded;
 	
-	public Missile(String playerId, int x, int y, int maxDistance, String direction, int speed) {
+	public Missile(Session playerId, int x, int y, int maxDistance, String direction, int speed) {
 		this.playerId = playerId;
 		this.posX = x;
 		this.posY = y;
@@ -21,6 +23,10 @@ public class Missile {
 		this.exploded = false;
 		
 		this.travelledDistance = 0;
+	}
+	
+	public Session getPlayerId() {
+		return playerId;
 	}
 	
 	public int getPosX() {
