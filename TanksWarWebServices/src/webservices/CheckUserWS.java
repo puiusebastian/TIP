@@ -1,4 +1,4 @@
-		package webservices;
+package webservices;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -17,9 +17,8 @@ import javax.ws.rs.core.MediaType;
 public class CheckUserWS {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public Boolean checkUser( String acc)
+	public Boolean checkUser( JsonObject jsonObject)
 	{
-		JsonObject jsonObject=Json.createReader(new StringReader(acc)).readObject();
 		String user=jsonObject.getString("username");
 		String pass=jsonObject.getString("password");
 		
@@ -31,7 +30,6 @@ public class CheckUserWS {
 			{
 				return true; //exista utilizatorul cu datele de logare acc
 			}
-			
 		}
 		return false;
 	}

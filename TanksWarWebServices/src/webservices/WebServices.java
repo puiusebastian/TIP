@@ -13,4 +13,18 @@ public class WebServices {
 	public List<Users> getUsers(){
 		return DBManager.getInstance().getUsersList();
 	}
+	
+	@GET
+	@Path("/getTanks")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Tanks> getTanks(){
+		return DBManager.getInstance().getTanksList();
+	}
+	
+	@GET
+	@Path("/getUT")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User_tank> getUT(){
+		return DBManager.getInstance().getUTList();
+	}
 }

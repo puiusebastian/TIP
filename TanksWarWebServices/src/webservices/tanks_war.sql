@@ -1,4 +1,4 @@
-reate database Tanks_War;
+create database Tanks_War;
 use Tanks_War;
 create table users(id INT unsigned NOT NULL AUTO_INCREMENT, 
 username varchar(30) NOT NULL,

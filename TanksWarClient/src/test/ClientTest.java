@@ -1,5 +1,6 @@
 package test;
 
+import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +27,13 @@ public class ClientTest {
 		
 
 		WebTarget target = client.target(getBaseURI());
-		System.out.println(target.path("api").path("checkuser").request().accept(MediaType.TEXT_PLAIN).get(String.class));
-	/*	
-		String accArray="{\"username\":\"tank\",\"password\":\"tank\"}"; // {"username":"wanted username","password":"wanted password"}  
 		
+		String accArray="{\"username\":\"seby_boss\",\"password\":\"parola\"}"; // {"username":"wanted username","password":"wanted password"}  
+		JsonObject jsonObject=Json.createReader(new StringReader(accArray)).readObject();
 		//check if user "tank" with password "tank" exists
 		System.out.println(target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
-				.post(Entity.entity(accArray,MediaType.TEXT_PLAIN),Boolean.class));
+				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class));
+		
 		//display users
 		System.out.println(target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(String.class));
 		//save list
@@ -45,10 +46,10 @@ public class ClientTest {
 			JsonObject user=users.getJsonObject(i);
 			System.out.println(user.getString("username")); //display by JsonObject
 		}
-		*/
+		
 	}
 
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8080/").build();
+		return UriBuilder.fromUri("http://localhost:8888/").build();
 	}
 }
