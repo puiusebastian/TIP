@@ -25,4 +25,11 @@ insert into tanks values(5,55,1420,320,380,'STA-2');
 insert into tanks values(6,60,1800,420,410,'TVP-T_50/51');
 insert into tanks values(7,50,1700,530,380,'T-10');
 insert into tanks values(8,33,2500,950,400,'VK_70.01(K)');
+alter table users add name varchar(50);
+alter table users add email varchar(50);
+alter table users add age INT unsigned NOT NULL ; 
+alter table users add Constraint age_CK check(age>=10 and age<100); 
+UPDATE users
+SET name = 'Sebastian Puiu', email = 'sebastianpuiu@gmail.com', age='23'
+WHERE id=1;
 
