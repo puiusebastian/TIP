@@ -1,8 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.StringReader;
 
-
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,8 +53,11 @@ public class Login extends HttpServlet {
 	    
 	    WebTarget target = client.target(getBaseURI());
 	    		
+		  
+		JsonObject jsonObject=Json.createReader(new StringReader(user_pass)).readObject();
+		
 		boolean responseFromRest=target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
-				.post(Entity.entity(user_pass,MediaType.TEXT_PLAIN),Boolean.class);
+				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class);
 		
 		
 		
