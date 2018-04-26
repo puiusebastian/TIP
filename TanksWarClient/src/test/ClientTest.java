@@ -28,7 +28,7 @@ public class ClientTest {
 
 		WebTarget target = client.target(getBaseURI());
 		
-		String accArray="{\"username\":\"seby_boss\",\"password\":\"parola\"}"; // {"username":"wanted username","password":"wanted password"}  
+		String accArray="{\"username\":\"ilie\",\"password\":\"yoki\"}"; // {"username":"wanted username","password":"wanted password"}  
 		JsonObject jsonObject=Json.createReader(new StringReader(accArray)).readObject();
 		//check if user "tank" with password "tank" exists
 		System.out.println(target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
