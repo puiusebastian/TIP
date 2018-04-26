@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.JsonObject;
+
 public class DBManager {
 	private static final String URL = "jdbc:mysql://localhost:3306/tanks_war";
 	private static final String USERNAME = "root";
@@ -39,7 +41,7 @@ public class DBManager {
 			st.execute("select * from Users");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Users user = new Users(rs.getInt("id"),rs.getString("username"),rs.getString("password"));
+				Users user = new Users(rs.getInt("id"),rs.getString("username"),rs.getString("password"),rs.getString("name"),rs.getString("email"),rs.getInt("age"));
 				usersList.add(user);
 			}
 			// st.close();
@@ -56,7 +58,7 @@ public class DBManager {
 			st.execute("select * from tanks");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("missile_range"));
+				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("missile_range"),rs.getString("tank_name"));
 				tanksList.add(tank);
 			}
 			// st.close();
