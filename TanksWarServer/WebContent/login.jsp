@@ -13,6 +13,9 @@
 				<input type="text" placeholder="username" name="username"/> 
 				<input type="password" placeholder="password" name="userpass" />
 				<button type="submit">login</button>
+				<p class="message">
+					Not registered? <a href="register.jsp">Create an account</a>
+				</p>
 			</form>
 		</div>
 	</div>
