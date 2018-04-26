@@ -100,3 +100,15 @@ body {
 .container .info span .fa {
   color: #EF3B3A;
 }
+.error{
+  padding-top: 3px;
+  color:#ff0033;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}
+
+.isa_error {
+  height: 25px;
+    color: #D8000C;
+    background-color: #FFD2D2;
+}

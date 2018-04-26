@@ -44,6 +44,8 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 	          
+		HttpSession session = request.getSession();
+		
 	    String n=request.getParameter("username");  
 	    String p=request.getParameter("userpass");  
 	    String user_pass = "{\"username\":\""+n+"\",\"password\":\""+p+"\"}";
@@ -63,7 +65,6 @@ public class Login extends HttpServlet {
 		
 		if(responseFromRest) {
 			System.out.println("Successful login");
-			HttpSession session = request.getSession();
 			System.out.println(n);
 			session.setAttribute("user", n);
 			//setting session to expiry in 30 mins
@@ -71,6 +72,7 @@ public class Login extends HttpServlet {
 			response.sendRedirect("index.jsp");
 		}
 		else {
+			session.setAttribute("login_error", "*Invalid username or password!");
 			System.out.println("Not really Successful login");
 			response.sendRedirect("login.jsp");
 		}
