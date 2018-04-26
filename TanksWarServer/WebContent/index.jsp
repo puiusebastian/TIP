@@ -18,10 +18,10 @@
 <nav class='navbar navbar-invers title-bar' >
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li><span id="a-home"><a href="#"><span class="glyphicon glyphicon-home"></span> HOME</a></span></li> 
-      <li><a href="#">Tanks</a></li>
-      <li><a href="#">Stats</a></li>
-      <li><a href="#">Game</a></li>
+      <li><span id="a-home"><a href="index.jsp"><span class="glyphicon glyphicon-home"></span> HOME</a></span></li> 
+      <li><a href="tanks.jsp">Tanks</a></li>
+      <li><a href="stats.jsp">Stats</a></li>
+      <li><a href="game.jsp">Game</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li id='user_name'><%out.println(username);%></li>
