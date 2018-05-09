@@ -13,6 +13,9 @@ public class Player {
 	public String movementBuffer;
 	private int team;
 	private boolean alive;
+	private String username;
+	private int kills;
+	private int deaths;
 	
 	public Player(int x, int y, int team) {
 		this.posX = x;
@@ -31,6 +34,10 @@ public class Player {
 		this.moveLeft = false;
 		this.moveRight = false;
 		this.alive = true;
+		
+		this.username = "Unknown";
+		this.kills = 0;
+		this.deaths = 0;
 	}
 	
 	public int getPosX() {
@@ -73,7 +80,20 @@ public class Player {
 		this.alive = alive;
 	}
 	
-	public void Update() {
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public int getKills() {
+		return kills;
+	}
+
+	public int getDeaths() {
+		return deaths;
+	}
+
+	public void Update(int mapWidth, int mapHeight, int playerTileSize) {
 		// Update movement direction
 		/*switch(this.movementBuffer) {
     	case "up":
@@ -104,19 +124,27 @@ public class Player {
 		*/
 		// Move the player
 		if(this.moveUp == true) {
-			this.posY -= this.speed;
+			if(this.posY - this.speed >= 0) {
+				this.posY -= this.speed;
+			}
 			this.movementDirection = "up";
 		}
 		else if(this.moveDown == true) {
-			this.posY += this.speed;
+			if(this.posY + playerTileSize + this.speed <= mapHeight) {
+				this.posY += this.speed;
+			}
 			this.movementDirection = "down";
 		}
 		else if(this.moveLeft == true) {
-			this.posX -= this.speed;
+			if(this.posX - this.speed >= 0) {
+				this.posX -= this.speed;
+			}
 			this.movementDirection = "left";
 		}
 		else if(this.moveRight == true) {
-			this.posX += this.speed;
+			if(this.posX + playerTileSize + this.speed <= mapWidth) {
+				this.posX += this.speed;
+			}
 			this.movementDirection = "right";
 		}
 	}

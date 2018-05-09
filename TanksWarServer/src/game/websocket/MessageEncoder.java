@@ -17,13 +17,16 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     			.add("numberOfPlayers", messages[0].getNumberOfPlayers())
     			.add("numberOfMissiles", messages[0].getNumberOfMissiles())
     			.add("tileSize", messages[0].getTileSize())
-    			.add("missileSize", messages[0].getMissileSize())
+    			.add("missileTileSize", messages[0].getMissileTileSize())
+    			.add("playerTileSize", messages[0].getPlayerTileSize())
     			.add("roundTimeElapsed", messages[0].getRoundTimeElapsed())
     			.add("roundNumber", messages[0].getRoundNumber())
     			.add("firstTeamScore", messages[0].getFirstTeamScore())
     			.add("secondTeamScore", messages[0].getSecondTeamScore())
     			.add("playerWindowWidth", messages[0].getPlayerWindowWidth())
     			.add("playerWindowHeight", messages[0].getPlayerWindowHeight())
+    			.add("mapWidth", messages[0].getMapWidth())
+    			.add("mapHeight", messages[0].getMapHeight())
     			);
     	
     	for(int i = 1; i < messages.length; ++i) {
@@ -32,25 +35,15 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     		if(messages[i].getMovementDirection() != null) {
     			objectBuilder.add("team", messages[i].getTeam());
     			objectBuilder.add("alive", messages[i].getAlive());
+    			objectBuilder.add("username", messages[i].getUsername());
+    			objectBuilder.add("kills", messages[i].getKills());
+    			objectBuilder.add("deaths", messages[i].getDeaths());
     			objectBuilder.add("movementDirection", messages[i].getMovementDirection());
     		}
     		arrayBuilder.add(objectBuilder);
-    		
-    		/*arrayBuilder.add(Json.createObjectBuilder()
-    				.add("posX", messages[i].getPosX())
-    				.add("posY", messages[i].getPosY())
-    				.add("movementDirection", messages[i].getMovementDirection())
-    				);*/
     	}
     	
     	return arrayBuilder.build().toString();
-    			
-        /*return Json.createObjectBuilder()
-                       .add("message", message.getContent())
-                       .add("sender", message.getSender())
-                       .add("received", "")
-                       .build().toString();
-                       */
     }
 
 	@Override

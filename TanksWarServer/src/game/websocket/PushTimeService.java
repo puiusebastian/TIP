@@ -19,14 +19,18 @@ public class PushTimeService implements Runnable {
     private int roundsPerGame = 5;
     
     // Game configs
-    private int mapWidth = 1400;
-    private int mapHeight = 1200;
-    private int playerWindowWidth = 800;
-    private int playerWindowHeight = 500;
-    private static int tileSize = 30;
-    private static int missileSize = 10;
-    private static int firstTeamPlayerSpawnPointX = 100;
-    private static int firstTeamPlayerSpawnPointY = 250;
+    private static int tileSize = 64;
+    private int mapRows = 40;
+    private int mapColumns = 51;
+    private int mapWidth = tileSize * mapColumns;
+    private int mapHeight = tileSize * mapRows;
+    private int playerWindowWidth = 896;
+    private int playerWindowHeight = 640;
+    
+    private static int playerTileSize = 42;
+    private static int missileTileSize = 10;
+    private static int firstTeamPlayerSpawnPointX = 600; // 100
+    private static int firstTeamPlayerSpawnPointY = 600; // 250
     private static int secondTeamPlayerSpawnPointX = 400;
     private static int secondTeamPlayerSpawnPointY = 250;
     
@@ -61,20 +65,20 @@ public class PushTimeService implements Runnable {
     	int posX = player.getPosX(), posY = player.getPosY();
     	switch(player.getMovementDirection()) {
     	case "up":
-    		posX = player.getPosX() + tileSize/2 - missileSize/2;
-    		posY = player.getPosY() - missileSize;
+    		posX = player.getPosX() + playerTileSize/2 - missileTileSize/2;
+    		posY = player.getPosY() - missileTileSize;
     		break;
     	case "down":
-    		posX = player.getPosX() + tileSize/2 - missileSize/2;
-    		posY = player.getPosY() + tileSize;
+    		posX = player.getPosX() + playerTileSize/2 - missileTileSize/2;
+    		posY = player.getPosY() + playerTileSize;
     		break;
     	case "left":
-    		posX = player.getPosX() - missileSize;
-    		posY = player.getPosY() + tileSize/2 - missileSize/2;
+    		posX = player.getPosX() - missileTileSize;
+    		posY = player.getPosY() + playerTileSize/2 - missileTileSize/2;
     		break;
     	case "right":
-    		posX = player.getPosX() + tileSize;
-    		posY = player.getPosY() + tileSize/2 - missileSize/2;
+    		posX = player.getPosX() + playerTileSize;
+    		posY = player.getPosY() + playerTileSize/2 - missileTileSize/2;
     		break;
     	}
     	Missile missile = new Missile(session, posX, posY, 100, player.getMovementDirection(), 3);
@@ -134,8 +138,8 @@ public class PushTimeService implements Runnable {
     	Iterator<Missile> missilesListIterator = missilesList.iterator();
         while(missilesListIterator.hasNext()) {
         	Missile missile = missilesListIterator.next();
-        	int missileCenterX = missile.getPosX() + missileSize;
-        	int missileCenterY = missile.getPosY() + missileSize;
+        	int missileCenterX = missile.getPosX() + missileTileSize;
+        	int missileCenterY = missile.getPosY() + missileTileSize;
         	for(Player player : playersMap.values()) {
         		if(player.getTeam() != playersMap.get(missile.getPlayerId()).getTeam()) {
 	        		int playerLeftEdge = player.getPosX();
@@ -225,7 +229,7 @@ public class PushTimeService implements Runnable {
                 for (Session key : playersMap.keySet()) {
                 	Player player = playersMap.get(key);
                 	
-                	player.Update();
+                	player.Update(mapWidth, mapHeight, playerTileSize);
                 }
                 
                 // Update missiles
@@ -253,13 +257,16 @@ public class PushTimeService implements Runnable {
                 messages[0].setNumberOfPlayers(playersMap.keySet().size());
                 messages[0].setNumberOfMissiles(missilesList.size());
                 messages[0].setTileSize(PushTimeService.tileSize);
-                messages[0].setMissileSize(PushTimeService.missileSize);
+                messages[0].setMissileTileSize(PushTimeService.missileTileSize);
+                messages[0].setPlayerTileSize(playerTileSize);
                 messages[0].setRoundTimeElapsed(Integer.toString(roundTimeElapsed.getMinutes()) + ":" + Integer.toString(roundTimeElapsed.getSeconds()));
                 messages[0].setRoundNumber(roundNumber);
                 messages[0].setFirstTeamScore(firstTeamScore);
                 messages[0].setSecondTeamScore(secondTeamScore);
                 messages[0].setPlayerWindowWidth(playerWindowWidth);
                 messages[0].setPlayerWindowHeight(playerWindowHeight);
+                messages[0].setMapWidth(mapWidth);
+                messages[0].setMapHeight(mapHeight);
                 
                 int index = 1;
                 for (Session key : playersMap.keySet()) {
@@ -270,6 +277,9 @@ public class PushTimeService implements Runnable {
                 	messages[index].setPosY(player.getPosY());
                 	messages[index].setTeam(player.getTeam());
                 	messages[index].setAlive(player.isAlive());
+                	messages[index].setUsername(player.getUsername());
+                	messages[index].setKills(player.getKills());
+                	messages[index].setDeaths(player.getDeaths());
                 	messages[index].setMovementDirection(player.getMovementDirection());
                 	
                 	index++;

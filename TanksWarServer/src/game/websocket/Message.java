@@ -7,17 +7,23 @@ public class Message {
 	private int posY;
 	private int team;
 	private boolean alive;
+	private String username;
+	private int kills;
+	private int deaths;
 	private String movementDirection;
 	private int numberOfPlayers;
 	private int numberOfMissiles;
 	private int tileSize;
-	private int missileSize;
+	private int missileTileSize;
+	private int playerTileSize;
 	private String roundTimeElapsed;
 	private int roundNumber;
 	private int firstTeamScore;
 	private int secondTeamScore;
 	private int playerWindowWidth;
 	private int playerWindowHeight;
+	private int mapWidth;
+	private int mapHeight;
 	
 	public int getPosX() {
 		return posX;
@@ -42,6 +48,24 @@ public class Message {
 	}
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public int getKills() {
+		return kills;
+	}
+	public void setKills(int kills) {
+		this.kills = kills;
+	}
+	public int getDeaths() {
+		return deaths;
+	}
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
 	}
 	public String getMovementDirection() {
 		return movementDirection;
@@ -73,11 +97,17 @@ public class Message {
 	public void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
 	}
-	public int getMissileSize() {
-		return missileSize;
+	public int getMissileTileSize() {
+		return missileTileSize;
 	}
-	public void setMissileSize(int missileSize) {
-		this.missileSize = missileSize;
+	public void setMissileTileSize(int missileTileSize) {
+		this.missileTileSize = missileTileSize;
+	}
+	public int getPlayerTileSize() {
+		return playerTileSize;
+	}
+	public void setPlayerTileSize(int playerTileSize) {
+		this.playerTileSize = playerTileSize;
 	}
 	public String getRoundTimeElapsed() {
 		return roundTimeElapsed;
@@ -114,6 +144,18 @@ public class Message {
 	}
 	public void setPlayerWindowHeight(int playerWindowHeight) {
 		this.playerWindowHeight = playerWindowHeight;
+	}
+	public int getMapWidth() {
+		return mapWidth;
+	}
+	public void setMapWidth(int mapWidth) {
+		this.mapWidth = mapWidth;
+	}
+	public int getMapHeight() {
+		return mapHeight;
+	}
+	public void setMapHeight(int mapHeight) {
+		this.mapHeight = mapHeight;
 	}
 	
 }
