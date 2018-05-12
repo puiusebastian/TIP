@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+/* The grid: Three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 50px;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+    color: white;
+    margin: 20px;
+}
+
+
+.containerTab {
+    padding: 20px;
+    color: white;
+    width:40%;
+    height: 200px;
+    margin:0 auto !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size:18px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table ;
+    clear: both;
+}
+
+/* Closable button inside the container tab */
+.closebtn {
+    float: right;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.row{
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto !important;
+
+}
+.second-row{
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    width: 75%;
+    margin: 0 auto !important;
+}
+img{
+    height: 128px;
+    width: auto;
+}
+.containerTab p{
+	font-size: 12px;
+    padding-left: 100px;
+}
+
+button{
+	background-color: #007FFF;
+	margin-top:10px !important;
+}
+.column p{
+	margin-top:20px;
+}

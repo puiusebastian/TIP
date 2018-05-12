@@ -30,6 +30,11 @@
   </div>
 </head>
 <body>
+	<footer class="page-footer font-small blue pt-4 mt-4">
+		<div class="footer-copyright py-3 text-center">
+        	© 2018 Copyright
+    	</div>
+	</footer>
 </body>
 <%}else{
 	response.sendRedirect("login.jsp");
