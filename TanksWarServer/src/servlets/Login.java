@@ -62,7 +62,6 @@ public class Login extends HttpServlet {
 		boolean responseFromRest=target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
 				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class);
 		
-		
 		if(responseFromRest) {
 			System.out.println("Successful login");
 			System.out.println(n);

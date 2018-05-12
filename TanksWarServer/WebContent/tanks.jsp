@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
-	import="javax.json.JsonArray"
-	import="javax.json.JsonObject"
-	import="java.io.StringReader"
-	import ="javax.json.Json"
 %>
+<%@ page import="servlets.TanksHelper" %>
+
 <%		Object username =  request.getSession().getAttribute("user"); 
-		if( username != null){
-			
-%>	
+		if( username != null){ 
+			out.println(TanksHelper.GetTanks());
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
