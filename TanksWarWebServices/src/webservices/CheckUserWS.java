@@ -1,10 +1,8 @@
 package webservices;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
