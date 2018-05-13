@@ -7,7 +7,7 @@
 		if( username != null){ 
 			out.println(TanksHelper.GetTanks());
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -19,7 +19,11 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<link rel="stylesheet" href="css/index_style.css">		
   	
-  	<nav class='navbar navbar-invers title-bar' >
+</head>
+
+<body>
+
+	<nav class='navbar navbar-invers title-bar' >
 	  <div class="container-fluid">
 	    <ul class="nav navbar-nav">
 	      <li><span id="a-home"><a href="index.jsp"><span class="glyphicon glyphicon-home"></span> HOME</a></span></li> 
@@ -32,9 +36,8 @@
 	      <li><span><a href="Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span></li>
 	    </ul> 
 	  </div>
-</head>
+	</nav>
 
-<body>
 	<div class="row">
 	  <div class="column" onclick="openTab('b1');" style="background: grey ;">
 	    <img src="css/tank_dark.png">
