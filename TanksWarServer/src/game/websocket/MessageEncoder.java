@@ -27,6 +27,8 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     			.add("playerWindowHeight", messages[0].getPlayerWindowHeight())
     			.add("mapWidth", messages[0].getMapWidth())
     			.add("mapHeight", messages[0].getMapHeight())
+    			.add("gameEnded", messages[0].isGameEnded())
+    			.add("winnerTeam", messages[0].getWinnerTeam())
     			);
     	
     	for(int i = 1; i < messages.length; ++i) {
@@ -34,6 +36,8 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     		objectBuilder.add("posY", messages[i].getPosY());
     		if(messages[i].getMovementDirection() != null) {
     			objectBuilder.add("team", messages[i].getTeam());
+    			objectBuilder.add("playerFullHealth", messages[i].getPlayerFullHealth());
+    			objectBuilder.add("playerCurrentHealth", messages[i].getPlayerCurrentHealth());
     			objectBuilder.add("alive", messages[i].getAlive());
     			objectBuilder.add("username", messages[i].getUsername());
     			objectBuilder.add("kills", messages[i].getKills());

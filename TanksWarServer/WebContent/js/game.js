@@ -7,7 +7,7 @@ var boardWidth = 900;
 var boardHeight = 600;
 var mapWidth = 1500;
 var mapHeight = 1200;
-var tileSize = 30;
+var tileSize = 64;
 var missileTileSize = 10;
 var playerTileSize = 42;
 var playerIndex = 0;
@@ -20,6 +20,8 @@ var roundTimeElapsed = "00:00";
 var roundNumber = 0;
 var firstTeamScore = 0;
 var secondTeamScore = 0;
+var gameEnded = false;
+var winnerTeam = 0;
 
 function gameLobby() {
 	loadGame();
@@ -38,7 +40,8 @@ function loadGame() {
 	canvas.height = boardHeight;
 	
 	// Create a player
-	playersBuffer[0] = new Player(getImage("disabled_tank"), 600, 600, 0);
+	playersBuffer[0] = new Player('assets/empty.png', 600, 600, 0);
+	playersBuffer[0].alive = false;
 	
 	// Add input events
 	getInput();
@@ -48,6 +51,26 @@ function loadGame() {
 }
 
 function runGame() {
+	// Check if game ended
+	if(gameEnded == true) {
+		var result;
+		if(winnerTeam == 0) {
+			result = '<span class="white_text">TIE</span>';
+		}
+		else if(winnerTeam == players[playerIndex].team) {
+			result = '<span class="green_text">VICTORY</span>';
+		}
+		else {
+			result = '<span class="red_text">DEFEAT</span>';
+		}
+		document.getElementById("end_message").innerHTML = result;
+		document.getElementById("end_message").style.display = "block";
+	}
+	else {
+		document.getElementById("end_message").innerHTML = "";
+		document.getElementById("end_message").style.display = "none";
+	}
+	
 	// Update game statistics
 	document.getElementById("round_time_elapsed").innerHTML = roundTimeElapsed;
 	document.getElementById("round_number").innerHTML = roundNumber;
@@ -101,27 +124,27 @@ function mapDraw() {
 	// Determine coordinates for the center of the view
 	var centerX;
 	var centerY;
-	if(players[playerIndex].x + tileSize / 2 - boardWidth / 2 > 0 &&
-			players[playerIndex].x + tileSize/2 + boardWidth / 2 < mapWidth) {
-		centerX = players[playerIndex].x + tileSize / 2;
+	if(players[playerIndex].x + playerTileSize / 2 - boardWidth / 2 > 0 &&
+			players[playerIndex].x + playerTileSize/2 + boardWidth / 2 < mapWidth) {
+		centerX = players[playerIndex].x + playerTileSize / 2;
 	}
 	else {
-		if(players[playerIndex].x + tileSize / 2 - boardWidth / 2 <= 0) {
+		if(players[playerIndex].x + playerTileSize / 2 - boardWidth / 2 <= 0) {
 			centerX = boardWidth / 2;
 		}
-		if(players[playerIndex].x + tileSize + boardWidth / 2 >= mapWidth) {
+		if(players[playerIndex].x + playerTileSize + boardWidth / 2 >= mapWidth) {
 			centerX = mapWidth - boardWidth/2;
 		}
 	}
-	if(players[playerIndex].y + tileSize / 2 - boardHeight / 2 > 0 &&
-			players[playerIndex].y + tileSize/2 + boardHeight / 2 < mapHeight) {
-		centerY = players[playerIndex].y + tileSize / 2;
+	if(players[playerIndex].y + playerTileSize / 2 - boardHeight / 2 > 0 &&
+			players[playerIndex].y + playerTileSize/2 + boardHeight / 2 < mapHeight) {
+		centerY = players[playerIndex].y + playerTileSize / 2;
 	}
 	else {
-		if(players[playerIndex].y + tileSize / 2 - boardHeight / 2 <= 0) {
+		if(players[playerIndex].y + playerTileSize / 2 - boardHeight / 2 <= 0) {
 			centerY = boardHeight / 2;
 		}
-		if(players[playerIndex].y + tileSize/2 + boardHeight / 2 >= mapHeight) {
+		if(players[playerIndex].y + playerTileSize/2 + boardHeight / 2 >= mapHeight) {
 			centerY = mapHeight - boardHeight/2;
 		}
 	}
@@ -154,6 +177,69 @@ function mapDraw() {
 					break;
 				case 4:
 					coords = getGraphicElementCoords("tilesheet_road_gray_left_right");
+					break;
+				case 5:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_bottom");
+					break;
+				case 6:
+					coords = getGraphicElementCoords("tilesheet_road_gray_bottom_right");
+					break;
+				case 7:
+					coords = getGraphicElementCoords("tilesheet_road_gray_bottom_left");
+					break;
+				case 8:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_right");
+					break;
+				case 9:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_left");
+					break;
+				case 10:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_bottom_right");
+					break;
+				case 11:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_bottom_left");
+					break;
+				case 12:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_left_right");
+					break;
+				case 13:
+					coords = getGraphicElementCoords("tilesheet_road_gray_bottom_left_right");
+					break;
+				case 14:
+					coords = getGraphicElementCoords("tilesheet_road_gray_top_bottom_left_right");
+					break;
+				case 15:
+					coords = getGraphicElementCoords("tilesheet_road_brown_left_right");
+					break;
+				case 16:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_bottom");
+					break;
+				case 17:
+					coords = getGraphicElementCoords("tilesheet_road_brown_bottom_right");
+					break;
+				case 18:
+					coords = getGraphicElementCoords("tilesheet_road_brown_bottom_left");
+					break;
+				case 19:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_right");
+					break;
+				case 20:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_left");
+					break;
+				case 21:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_bottom_right");
+					break;
+				case 22:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_bottom_left");
+					break;
+				case 23:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_left_right");
+					break;
+				case 24:
+					coords = getGraphicElementCoords("tilesheet_road_brown_bottom_left_right");
+					break;
+				case 25:
+					coords = getGraphicElementCoords("tilesheet_road_brown_top_bottom_left_right");
 					break;
 				default:
 					coords = [0, 0, 0, 0];
@@ -225,18 +311,19 @@ function gameUpdateBuffers(data) {
 	boardHeight = dataArray[0].playerWindowHeight;
 	mapWidth = dataArray[0].mapWidth;
 	mapHeight = dataArray[0].mapHeight;
+	gameEnded = dataArray[0].gameEnded;
+	winnerTeam = dataArray[0].winnerTeam;
 	
 	playersBuffer = [];
 	for(var i = 1; i < numberOfPlayers + 1; ++i) {
+		playersBuffer[i-1] = new Player(getImage("spritesheet"), dataArray[i].posX, dataArray[i].posY,
+				dataArray[i].team, dataArray[i].username, dataArray[i].kills, dataArray[i].deaths);
 		if(dataArray[i].alive == false) {
-			playersBuffer[i-1] = new Player(getImage("disabled_tank"), dataArray[i].posX, dataArray[i].posY, dataArray[i].team);
 			playersBuffer[i-1].alive = false;
 		}
-		else {
-			playersBuffer[i-1] = new Player(getImage("spritesheet"), dataArray[i].posX, dataArray[i].posY,
-					dataArray[i].team, dataArray[i].username, dataArray[i].kills, dataArray[i].deaths);
-		}
 		
+		playersBuffer[i-1].fullHealth = dataArray[i].playerFullHealth;
+		playersBuffer[i-1].currentHealth = dataArray[i].playerCurrentHealth;
 		playersBuffer[i-1].movementDirection = dataArray[i].movementDirection;
 	}
 	

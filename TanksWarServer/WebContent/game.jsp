@@ -32,6 +32,8 @@
 				<div class="red_text"><span id="second_team_score"></span> wins</div>
 				<div id = "second_team_wrapper"></div>
 			</div>
+			
+			<div id="end_message"></div>
 		</div>
 	</section>
 </body>

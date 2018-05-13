@@ -68,6 +68,69 @@ function getGraphicElementCoords(name) {
 		case "tilesheet_road_gray_left_right":
 			return [128, 0, 64, 64];
 			break;
+		case "tilesheet_road_gray_top_bottom":
+			return [64, 0, 64, 64];
+			break;
+		case "tilesheet_road_gray_bottom_right":
+			return [192, 64, 64, 64];
+			break;
+		case "tilesheet_road_gray_bottom_left":
+			return [256, 64, 64, 64];
+			break;
+		case "tilesheet_road_gray_top_right":
+			return [320, 64, 64, 64];
+			break;
+		case "tilesheet_road_gray_top_left":
+			return [384, 64, 64, 64];
+			break;
+		case "tilesheet_road_gray_top_bottom_right":
+			return [192, 0, 64, 64];
+			break;
+		case "tilesheet_road_gray_top_bottom_left":
+			return [256, 0, 64, 64];
+			break;
+		case "tilesheet_road_gray_top_left_right":
+			return [320, 0, 64, 64];
+			break;
+		case "tilesheet_road_gray_bottom_left_right":
+			return [384, 0, 64, 64];
+			break;
+		case "tilesheet_road_gray_top_bottom_left_right":
+			return [64, 64, 64, 64];
+			break;
+		case "tilesheet_road_brown_left_right":
+			return [128, 128, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_bottom":
+			return [64, 128, 64, 64];
+			break;
+		case "tilesheet_road_brown_bottom_right":
+			return [192, 192, 64, 64];
+			break;
+		case "tilesheet_road_brown_bottom_left":
+			return [256, 192, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_right":
+			return [320, 192, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_left":
+			return [384, 192, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_bottom_right":
+			return [192, 128, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_bottom_left":
+			return [256, 128, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_left_right":
+			return [320, 128, 64, 64];
+			break;
+		case "tilesheet_road_brown_bottom_left_right":
+			return [384, 128, 64, 64];
+			break;
+		case "tilesheet_road_brown_top_bottom_left_right":
+			return [64, 192, 64, 64];
+			break;
 	}
 }
 

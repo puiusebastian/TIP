@@ -8,7 +8,8 @@ function Player(imageSrc, posX, posY, team, username, kills, deaths) {
 
 	this.x = posX;
 	this.y = posY;
-	
+	this.fullHealth;
+	this.currentHealth;
 	this.team = team;
 	
 	this.username = username;
@@ -74,6 +75,7 @@ Player.prototype.draw = function() {
 	// Determine the character's position
 	var posX;
 	var posY;
+	// Get coordinates on Ox
 	if(players[playerIndex].x + playerTileSize/2 - boardWidth/2 > 0 &&
 			players[playerIndex].x + playerTileSize/2 + boardWidth/2 < mapWidth) {
 		posX = this.x - (players[playerIndex].x + playerTileSize/2) + boardWidth/2;
@@ -83,10 +85,10 @@ Player.prototype.draw = function() {
 			posX = this.x;
 		}
 		if(players[playerIndex].x + playerTileSize/2 + boardWidth/2 >= mapWidth) {
-		console.log(this.x);
-			posX = this.x - players[playerIndex].x + boardWidth/2 + (this.x + boardWidth/2 - mapWidth);
+			posX = this.x - (mapWidth - boardWidth);
 		}
 	}
+	// Get coordinates on Oy
 	if(players[playerIndex].y + playerTileSize/2 - boardHeight/2 > 0 &&
 			players[playerIndex].y + playerTileSize/2 + boardHeight/2 < mapHeight) {
 		posY = this.y - (players[playerIndex].y + playerTileSize/2) + boardHeight/2;
@@ -96,8 +98,13 @@ Player.prototype.draw = function() {
 			posY = this.y;
 		}
 		if(players[playerIndex].y + playerTileSize/2 + boardHeight/2 >= mapHeight) {
-			posY = this.y - players[playerIndex].y + boardHeight/2 + (this.y + boardHeight/2 - mapHeight);
+			posY = this.y - (mapHeight - boardHeight);
 		}
+	}
+	
+	// Decrease opacity if the player is dead
+	if(this.alive == false) {
+		canvasContext.globalAlpha = 0.4;
 	}
 	
 	// Draw the character
@@ -119,19 +126,24 @@ Player.prototype.draw = function() {
 	canvasContext.fill();
 	
 	// Draw health bar
-	canvasContext.beginPath();
-	canvasContext.rect(posX, posY - 20, playerTileSize, 6);
-	canvasContext.fillStyle = "#919191";
-	canvasContext.fill();
+	if(this.alive == true) {
+		canvasContext.beginPath();
+		canvasContext.rect(posX, posY - 20, playerTileSize, 6);
+		canvasContext.fillStyle = "#919191";
+		canvasContext.fill();
+		
+		canvasContext.beginPath();
+		canvasContext.rect(posX, posY - 20, (this.currentHealth/this.fullHealth)*playerTileSize, 6);
+		canvasContext.fillStyle = "green";
+		canvasContext.fill();
+		
+		canvasContext.beginPath();
+		canvasContext.rect(posX, posY - 20, playerTileSize, 6);
+		canvasContext.lineWidth = 1.5;
+		canvasContext.strokeStyle = "#003300";
+		canvasContext.stroke();
+	}
 	
-	canvasContext.beginPath();
-	canvasContext.rect(posX, posY - 20, 0.5*playerTileSize, 6);
-	canvasContext.fillStyle = "green";
-	canvasContext.fill();
-	
-	canvasContext.beginPath();
-	canvasContext.rect(posX, posY - 20, playerTileSize, 6);
-	canvasContext.lineWidth = 1.5;
-	canvasContext.strokeStyle = "#003300";
-	canvasContext.stroke();
+	// Restore opacity
+	canvasContext.globalAlpha = 1;
 }

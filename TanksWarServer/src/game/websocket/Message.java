@@ -5,6 +5,8 @@ public class Message {
 	private int index;
 	private int posX;
 	private int posY;
+	private int playerFullHealth;
+	private int playerCurrentHealth;
 	private int team;
 	private boolean alive;
 	private String username;
@@ -24,6 +26,8 @@ public class Message {
 	private int playerWindowHeight;
 	private int mapWidth;
 	private int mapHeight;
+	private boolean gameEnded;
+	private int winnerTeam;
 	
 	public int getPosX() {
 		return posX;
@@ -36,6 +40,18 @@ public class Message {
 	}
 	public void setPosY(int posY) {
 		this.posY = posY;
+	}
+	public int getPlayerFullHealth() {
+		return playerFullHealth;
+	}
+	public void setPlayerFullHealth(int playerFullHealth) {
+		this.playerFullHealth = playerFullHealth;
+	}
+	public int getPlayerCurrentHealth() {
+		return playerCurrentHealth;
+	}
+	public void setPlayerCurrentHealth(int playerCurrentHealth) {
+		this.playerCurrentHealth = playerCurrentHealth;
 	}
 	public int getTeam() {
 		return team;
@@ -156,6 +172,18 @@ public class Message {
 	}
 	public void setMapHeight(int mapHeight) {
 		this.mapHeight = mapHeight;
+	}
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+	public void setGameEnded(boolean gameEnded) {
+		this.gameEnded = gameEnded;
+	}
+	public int getWinnerTeam() {
+		return winnerTeam;
+	}
+	public void setWinnerTeam(int winnerTeam) {
+		this.winnerTeam = winnerTeam;
 	}
 	
 }

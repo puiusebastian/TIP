@@ -6,6 +6,10 @@ public class Player {
 	private int posY;
 	private String movementDirection;
 	private int speed;
+	private int fullHealth;
+	private int currentHealth;
+	private int damage;
+	private int range;
 	public boolean moveUp;
 	public boolean moveDown;
 	public boolean moveLeft;
@@ -27,7 +31,14 @@ public class Player {
 		else if(team == 2) {
 			this.movementDirection = "left";
 		}
+		
+		// Tank parameters
 		this.speed = 2;
+		this.fullHealth = 500;
+		this.currentHealth = 500;
+		this.damage = 100;
+		this.range = 150;
+		
 		this.movementBuffer = "none";
 		this.moveUp = false;
 		this.moveDown = false;
@@ -64,6 +75,22 @@ public class Player {
 		this.movementDirection = movementDirection;
 	}
 	
+	public int getFullHealth() {
+		return fullHealth;
+	}
+	
+	public int getCurrentHealth() {
+		return currentHealth;
+	}
+	
+	public int getDamage() {
+		return damage;
+	}
+	
+	public int getRange() {
+		return range;
+	}
+	
 	public int getTeam() {
 		return team;
 	}
@@ -79,7 +106,6 @@ public class Player {
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
-	
 	
 	public String getUsername() {
 		return username;
@@ -147,6 +173,24 @@ public class Player {
 			}
 			this.movementDirection = "right";
 		}
+	}
+	
+	public void increaseKills() {
+		this.kills++;
+	}
+	
+	public void takeHit(int damage) {
+		this.currentHealth -= damage;
+		if(this.currentHealth <= 0) {
+			this.alive = false;
+			this.currentHealth = 0;
+			this.deaths++;
+		}
+	}
+	
+	public void revive() {
+		this.alive = true;
+		this.currentHealth = this.fullHealth;
 	}
 
 }

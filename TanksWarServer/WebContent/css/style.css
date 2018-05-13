@@ -31,6 +31,14 @@ hr {
 	color: white;
 }
 
+.green_text {
+	color: green;
+}
+
+.gray_text {
+	color: gray;
+}
+
 #game_wrapper {
 	position: relative;
 }
@@ -49,12 +57,12 @@ canvas {
 	position: absolute;
 	top: 100;
 	left: 25%;
-	border: 1px solid black;
 	width: 50%;
 	height: 400px;
 	padding-top: 10px;
 	text-shadow: 0 0 3px black;
 	color: #777777;
+	box-shadow: 0 0 3px black;
 }
 
 #score_container div {
@@ -94,4 +102,19 @@ table td {
 
 #players_table_username {
 	width: 100%;
+}
+
+#end_message {
+	background-color: rgba(0, 0, 0, 0.75);
+	position: absolute;
+	top: 20%;
+	left: 30%;
+	width: 40%;
+	min-width: 360px;
+	height: 50px;
+	padding: 10px;
+	text-shadow: 0 0 3px black;
+	box-shadow: 0 0 3px black;
+	font-size: 70px;
+	text-align: center;
 }
