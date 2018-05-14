@@ -29,6 +29,8 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     			.add("mapHeight", messages[0].getMapHeight())
     			.add("gameEnded", messages[0].isGameEnded())
     			.add("winnerTeam", messages[0].getWinnerTeam())
+    			.add("firstTeamFlagCapturedSeconds", messages[0].getFirstTeamFlagCapturedSeconds())
+    			.add("secondTeamFlagCapturedSeconds", messages[0].getSecondTeamFlagCapturedSeconds())
     			);
     	
     	for(int i = 1; i < messages.length; ++i) {
