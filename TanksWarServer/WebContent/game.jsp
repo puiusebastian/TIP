@@ -33,7 +33,7 @@
 				<div id = "second_team_wrapper"></div>
 			</div>
 			
-			<div id="end_message"></div>
+			<div id="end_message" style="display: none"></div>
 		</div>
 	</section>
 </body>

@@ -22,6 +22,8 @@ var firstTeamScore = 0;
 var secondTeamScore = 0;
 var gameEnded = false;
 var winnerTeam = 0;
+var firstTeamFlagCapturedSeconds = 0;
+var secondTeamFlagCapturedSeconds = 0;
 
 function gameLobby() {
 	loadGame();
@@ -111,6 +113,41 @@ function draw() {
 	for(var i = 0; i < missiles.length; ++i) {
 		missiles[i].draw();
 	}
+	
+	// Draw flag capturing indicators
+	var indicatorWidth = 80;
+		// First team flag
+	canvasContext.beginPath();
+	canvasContext.rect(boardWidth/2 - (indicatorWidth + 10), 10, indicatorWidth, 8);
+	canvasContext.fillStyle = "#dddddd";
+	canvasContext.fill();
+	
+	canvasContext.beginPath();
+	canvasContext.rect(boardWidth/2 - (indicatorWidth + 10), 10, (firstTeamFlagCapturedSeconds / 120) * indicatorWidth, 8);
+	canvasContext.fillStyle = "#002dda";
+	canvasContext.fill();
+	
+	canvasContext.beginPath();
+	canvasContext.rect(boardWidth/2 - (indicatorWidth + 10), 10, indicatorWidth, 8);
+	canvasContext.lineWidth = 1.5;
+	canvasContext.strokeStyle = "#0001a1";
+	canvasContext.stroke();
+		// Second team flag
+	canvasContext.beginPath();
+	canvasContext.rect(boardWidth/2 + 10, 10, indicatorWidth, 8);
+	canvasContext.fillStyle = "#dddddd";
+	canvasContext.fill();
+	
+	canvasContext.beginPath();
+	canvasContext.rect(boardWidth/2 + 10, 10, (secondTeamFlagCapturedSeconds / 120) * indicatorWidth, 8);
+	canvasContext.fillStyle = "#a00000";
+	canvasContext.fill();
+	
+	canvasContext.beginPath();
+	canvasContext.rect(boardWidth/2 + 10, 10, indicatorWidth, 8);
+	canvasContext.lineWidth = 1.5;
+	canvasContext.strokeStyle = "#770000";
+	canvasContext.stroke();
 }
 
 function mapDraw() {
@@ -313,6 +350,8 @@ function gameUpdateBuffers(data) {
 	mapHeight = dataArray[0].mapHeight;
 	gameEnded = dataArray[0].gameEnded;
 	winnerTeam = dataArray[0].winnerTeam;
+	firstTeamFlagCapturedSeconds = dataArray[0].firstTeamFlagCapturedSeconds;
+	secondTeamFlagCapturedSeconds = dataArray[0].secondTeamFlagCapturedSeconds;
 	
 	playersBuffer = [];
 	for(var i = 1; i < numberOfPlayers + 1; ++i) {

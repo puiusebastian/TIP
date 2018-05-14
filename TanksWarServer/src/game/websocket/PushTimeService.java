@@ -21,6 +21,20 @@ public class PushTimeService implements Runnable {
     private boolean gameEnded = false;
     private DateTime gameEndedTime;
     
+    private int flagCapturingMinutesNeeded = 2;
+    private static DateTime firstTeamFlagCapturingStartTime;
+    private static DateTime secondTeamFlagCapturingStartTime;
+    
+    private int firstTeamFlagLeftCoord = 19 * tileSize;
+    private int firstTeamFlagRightCoord = 25 * tileSize - 1;
+    private int firstTeamFlagTopCoord = 0 * tileSize;
+    private int firstTeamFlagBottomCoord = 5 * tileSize - 1;
+    
+    private int secondTeamFlagLeftCoord = 26 * tileSize;
+    private int secondTeamFlagRightCoord = 32 * tileSize - 1;
+    private int secondTeamFlagTopCoord = 34 * tileSize;
+    private int secondTeamFlagBottomCoord = 40 * tileSize - 1;
+    
     // Game configs
     private static int tileSize = 64;
     private int mapRows = 40;
@@ -83,6 +97,12 @@ public class PushTimeService implements Runnable {
     }
     
     public static void launchMissile(Session session, Player player) {
+    	for(Missile missile : missilesList) {
+    		if(playersMap.get(missile.getPlayerId()) == player) {
+    			return;
+    		}
+    	}
+    	
     	int posX = player.getPosX(), posY = player.getPosY();
     	switch(player.getMovementDirection()) {
     	case "up":
@@ -181,6 +201,45 @@ public class PushTimeService implements Runnable {
         }
     }
     
+    private void checkFlagCapturing() {
+    	boolean firstTeamFlagBeingCaptured = false;;
+    	boolean secondTeamFlagBeingCaptured = false;
+    	for(Player player : playersMap.values()) {
+    		int centerX = player.getPosX() + playerTileSize / 2;
+			int centerY = player.getPosY() + playerTileSize / 2;
+			
+			// Check first team flag
+    		if(player.isAlive() == true && player.getTeam() == 2 && firstTeamFlagBeingCaptured == false) {
+    			if(firstTeamFlagLeftCoord <= centerX && centerX <= firstTeamFlagRightCoord &&
+    					firstTeamFlagTopCoord <= centerY && centerY <= firstTeamFlagBottomCoord) {
+    				firstTeamFlagBeingCaptured = true;
+    			}
+    		}
+			
+    		// Check second team flag
+    		if(player.isAlive() == true && player.getTeam() == 1 && secondTeamFlagBeingCaptured == false) {
+    			if(secondTeamFlagLeftCoord <= centerX && centerX <= secondTeamFlagRightCoord &&
+    					secondTeamFlagTopCoord <= centerY && centerY <= secondTeamFlagBottomCoord) {
+    				secondTeamFlagBeingCaptured = true;
+    			}
+    		}
+    	}
+    	
+    	if(firstTeamFlagBeingCaptured == true && firstTeamFlagCapturingStartTime == null) {
+    		firstTeamFlagCapturingStartTime = new DateTime();
+    	}
+    	else if(firstTeamFlagBeingCaptured == false && firstTeamFlagCapturingStartTime != null) {
+    		firstTeamFlagCapturingStartTime = null;
+    	}
+    	
+    	if(secondTeamFlagBeingCaptured == true && secondTeamFlagCapturingStartTime == null) {
+    		secondTeamFlagCapturingStartTime = new DateTime();
+    	}
+    	else if(secondTeamFlagBeingCaptured == false && secondTeamFlagCapturingStartTime != null) {
+    		secondTeamFlagCapturingStartTime = null;
+    	}
+    }
+    
     private static void initializeGame() {
     	for(Player player : playersMap.values()) {
     		if(player.getTeam() == 1) {
@@ -194,6 +253,9 @@ public class PushTimeService implements Runnable {
     		
     		player.revive();
     	}
+    	
+    	firstTeamFlagCapturingStartTime = null;
+    	secondTeamFlagCapturingStartTime = null;
     }
     
     private void updateGameState() {
@@ -242,6 +304,24 @@ public class PushTimeService implements Runnable {
 	    		DateTime currentTime = new DateTime();
 	            Period roundTimeElapsed = new Period(roundStartTime, currentTime);
 	            if(roundTimeElapsed.getMinutes() == minutesPerRound) {
+	            	endOfRound = true;
+	            }
+	    	}
+	    	
+	    	// Check if flags have been captured
+	    	if(firstTeamFlagCapturingStartTime != null) {
+	    		DateTime currentTime = new DateTime();
+	            Period capturingTimeElapsed = new Period(firstTeamFlagCapturingStartTime, currentTime);
+	            if(capturingTimeElapsed.getMinutes() >= flagCapturingMinutesNeeded) {
+	            	secondTeamScore++;
+	            	endOfRound = true;
+	            }
+	    	}
+	    	if(secondTeamFlagCapturingStartTime != null) {
+	    		DateTime currentTime = new DateTime();
+	            Period capturingTimeElapsed = new Period(secondTeamFlagCapturingStartTime, currentTime);
+	            if(capturingTimeElapsed.getMinutes() >= flagCapturingMinutesNeeded) {
+	            	firstTeamScore++;
 	            	endOfRound = true;
 	            }
 	    	}
@@ -303,6 +383,9 @@ public class PushTimeService implements Runnable {
                 // Check missiles collision with players
                 checkMissilesCollisionWithPlayers();
                 
+                // Check if flags are being captured
+                checkFlagCapturing();
+                
                 // Send data to users
                 DateTime currentTime = new DateTime();
                 Period roundTimeElapsed = new Period(roundStartTime, currentTime);
@@ -325,6 +408,22 @@ public class PushTimeService implements Runnable {
                 messages[0].setMapHeight(mapHeight);
                 messages[0].setGameEnded(gameEnded);
                 messages[0].setWinnerTeam(winnerTeam);
+                if(firstTeamFlagCapturingStartTime != null) {
+                	currentTime = new DateTime();
+    	            Period capturingTimeElapsed = new Period(firstTeamFlagCapturingStartTime, currentTime);
+    	            messages[0].setFirstTeamFlagCapturedSeconds(capturingTimeElapsed.getMinutes() * 60 + capturingTimeElapsed.getSeconds());
+                }
+                else {
+                	messages[0].setFirstTeamFlagCapturedSeconds(0);
+                }
+                if(secondTeamFlagCapturingStartTime != null) {
+                	currentTime = new DateTime();
+    	            Period capturingTimeElapsed = new Period(secondTeamFlagCapturingStartTime, currentTime);
+    	            messages[0].setSecondTeamFlagCapturedSeconds(capturingTimeElapsed.getMinutes() * 60 + capturingTimeElapsed.getSeconds());
+                }
+                else {
+                	messages[0].setSecondTeamFlagCapturedSeconds(0);
+                }
                 
                 int index = 1;
                 for (Session key : playersMap.keySet()) {

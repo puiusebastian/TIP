@@ -28,6 +28,8 @@ public class Message {
 	private int mapHeight;
 	private boolean gameEnded;
 	private int winnerTeam;
+	private int firstTeamFlagCapturedSeconds;
+	private int secondTeamFlagCapturedSeconds;
 	
 	public int getPosX() {
 		return posX;
@@ -184,6 +186,18 @@ public class Message {
 	}
 	public void setWinnerTeam(int winnerTeam) {
 		this.winnerTeam = winnerTeam;
+	}
+	public int getFirstTeamFlagCapturedSeconds() {
+		return firstTeamFlagCapturedSeconds;
+	}
+	public void setFirstTeamFlagCapturedSeconds(int firstTeamFlagCapturedSeconds) {
+		this.firstTeamFlagCapturedSeconds = firstTeamFlagCapturedSeconds;
+	}
+	public int getSecondTeamFlagCapturedSeconds() {
+		return secondTeamFlagCapturedSeconds;
+	}
+	public void setSecondTeamFlagCapturedSeconds(int secondTeamFlagCapturedSeconds) {
+		this.secondTeamFlagCapturedSeconds = secondTeamFlagCapturedSeconds;
 	}
 	
 }
