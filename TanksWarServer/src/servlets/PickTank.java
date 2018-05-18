@@ -34,7 +34,8 @@ public class PickTank extends HttpServlet {
 		
 	    String t=request.getParameter("tank"); 
 	    
-	    session.setAttribute("tank", t);
+	    Object username =  request.getSession().getAttribute("user");
+	    session.setAttribute( (String) username, t);                   //use username to create a session ----  (user, tank_picked)
 		//setting session to expiry in 30 mins
 		session.setMaxInactiveInterval(30*60);
 		response.sendRedirect("game.jsp");

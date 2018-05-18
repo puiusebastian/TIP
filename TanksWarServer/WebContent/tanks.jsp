@@ -9,18 +9,6 @@
 		if( username != null){ 
 			JsonArray tanksSpec = TanksHelper.GetTanks();
 			JsonObject tank;
-			//out.println(TanksHelper.GetTanks().getClass());
-	/*
-			if(tanksSpec.size()>4){
-				for(int i=0;i<8;i++)
-				{
-					tank=tanksSpec.getJsonObject(i);
-					out.println(tank); //display by JsonObject
-				}
-			}else{
-				System.out.println("There are not enough tanks in DataBase to display. It should be at least 5.");
-			}
-	*/
 %>
 <!DOCTYPE html>
 <html>
@@ -60,9 +48,10 @@
 	tank=tanksSpec.getJsonObject(0);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
-	    <form action="" method="post">
+	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;<%}%>" >BUY</button>
+	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%> 
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b2');" style="background:grey;">
@@ -71,9 +60,10 @@
 tank=tanksSpec.getJsonObject(1);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
-	    <form action="" method="post">
+	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b3');" style="background:grey;">
@@ -82,9 +72,10 @@ tank=tanksSpec.getJsonObject(1);
 	tank=tanksSpec.getJsonObject(2);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
-	    <form action="" method="post">
+	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	</div>
@@ -158,9 +149,10 @@ tank=tanksSpec.getJsonObject(4);
 tank=tanksSpec.getJsonObject(3);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
-	    <form action="" method="post">
+	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b5');" style="background:grey;">
@@ -169,9 +161,10 @@ tank=tanksSpec.getJsonObject(3);
 tank=tanksSpec.getJsonObject(4);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
-	    <form action="" method="post">
+	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	</div>

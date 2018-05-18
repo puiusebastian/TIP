@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
 %>
-<%		Object username =  request.getSession().getAttribute("user"); 
-		if( username != null){
+<%		Object username =  request.getSession().getAttribute("user");        //********* for getting picked tank by user use:
+		if( username != null){												//********** Object tank =  request.getSession().getAttribute((String)username);
 %>
 <!DOCTYPE html PUBLIC>
 <html>
@@ -42,7 +42,7 @@
 	    </ul> 
 	  </div>
 	</nav>
-<%		Object tank =  request.getSession().getAttribute("tank"); 
+<%		Object tank =  request.getSession().getAttribute((String)username); 
 		if( !(tank != null)){
 %>
 	<form action="PickTank" method="post">
@@ -53,7 +53,7 @@
 	  <input type="radio" name="tank" value="tank5"> tank5<br>
 	  <button type="submit">Pick</button>
 	</form> 
-<%}else{ %>
+<%}else{%>
 	<section id="game_section" >
 		<div id="game_wrapper">
 			<div id="canvas_container">
