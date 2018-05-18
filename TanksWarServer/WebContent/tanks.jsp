@@ -1,11 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
 %>
+<%@page import="javax.json.JsonObject"%>
+<%@page import="javax.json.JsonArray"%>
 <%@ page import="servlets.TanksHelper" %>
 
 <%		Object username =  request.getSession().getAttribute("user"); 
 		if( username != null){ 
-			out.println(TanksHelper.GetTanks());
+			JsonArray tanksSpec = TanksHelper.GetTanks();
+			JsonObject tank;
+			//out.println(TanksHelper.GetTanks().getClass());
+	/*
+			if(tanksSpec.size()>4){
+				for(int i=0;i<8;i++)
+				{
+					tank=tanksSpec.getJsonObject(i);
+					out.println(tank); //display by JsonObject
+				}
+			}else{
+				System.out.println("There are not enough tanks in DataBase to display. It should be at least 5.");
+			}
+	*/
 %>
 <!DOCTYPE html>
 <html>
@@ -41,7 +56,10 @@
 	<div class="row">
 	  <div class="column" onclick="openTab('b1');" style="background: grey ;">
 	    <img src="css/tank_dark.png">
-	    <p>DARK TANK</p>
+<%
+	tank=tanksSpec.getJsonObject(0);
+%>
+	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
@@ -49,7 +67,10 @@
 	  </div>
 	  <div class="column" onclick="openTab('b2');" style="background:grey;">
 	    <img src="css/tank_red.png">
-	    <p>SAND TANK</p>
+<%
+tank=tanksSpec.getJsonObject(1);
+%>
+	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
@@ -57,57 +78,75 @@
 	  </div>
 	  <div class="column" onclick="openTab('b3');" style="background:grey;">
 	    <img src="css/tank_dark.png">
-	    <p>RED TANK</p>
+<%
+	tank=tanksSpec.getJsonObject(2);
+%>
+	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
 	    </form>
 	  </div>
 	</div>
-	
+
+<%
+tank=tanksSpec.getJsonObject(0);
+%>
 	<div id="b1" class="containerTab" style="display:none;background:#88421D">
 	  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-	  	<p style="font-size:16px"><b>DARK TANK</b></p>
-	   <p>speed: asd</p>
-	   <p>health: asdasd</p>
-	   <p>damage: </p>
-	   <p>range:</p>
+	   <p style="font-size:16px"><b><%out.println(tank.getString("name")); %></b></p>
+	   <p>speed: <%out.println(tank.getInt("speed")); %></p>
+	   <p>health: <%out.println(tank.getInt("health")); %></p>
+	   <p>damage: <%out.println(tank.getInt("damage")); %></p>
+	   <p>range:<%out.println(tank.getInt("range")); %></p>
 	   <p>price:</p>
 	</div>
-	
+<%
+tank=tanksSpec.getJsonObject(1);
+%>	
 	<div id="b2" class="containerTab" style="display:none;background:#88421D">
 	  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-	  <p>speed: asd</p>
-	   <p>health: asdasd</p>
-	   <p>damage: </p>
-	   <p>range:</p>
-	   <p>price:</p>
+	  <p style="font-size:16px"><b><%out.println(tank.getString("name")); %></b></p>
+	  <p>speed: <%out.println(tank.getInt("speed")); %></p>
+	  <p>health: <%out.println(tank.getInt("health")); %></p>
+	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
+	  <p>range:<%out.println(tank.getInt("range")); %></p>
+	  <p>price:</p>
 	</div>
-	
+<%
+tank=tanksSpec.getJsonObject(2);
+%>	
 	<div id="b3" class="containerTab" style="display:none;background:#88421D">
 	  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-	  <p>speed: asd</p>
-	   <p>health: asdasd</p>
-	   <p>damage: </p>
-	   <p>range:</p>
+	  <p style="font-size:16px"><b><%out.println(tank.getString("name")); %></b></p>
+	  <p>speed: <%out.println(tank.getInt("speed")); %></p>
+	  <p>health: <%out.println(tank.getInt("health")); %></p>
+	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
+	  <p>range:<%out.println(tank.getInt("range")); %></p>
 	   <p>price:</p>
 	</div>
-	
+<%
+tank=tanksSpec.getJsonObject(3);
+%>
 	<div id="b4" class="containerTab" style="display:none;background:#88421D">
 	  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-	  <p>speed: asd</p>
-	   <p>health: asdasd</p>
-	   <p>damage: </p>
-	   <p>range:</p>
+	  <p style="font-size:16px"><b><%out.println(tank.getString("name")); %></b></p>
+	  <p>speed: <%out.println(tank.getInt("speed")); %></p>
+	  <p>health: <%out.println(tank.getInt("health")); %></p>
+	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
+	  <p>range:<%out.println(tank.getInt("range")); %></p>
 	   <p>price:</p>
 	</div>
-	
+<%
+tank=tanksSpec.getJsonObject(4);
+%>
 	<div id="b5" class="containerTab" style="display:none;background:#88421D">
 	  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-	  <p>speed: asd</p>
-	   <p>health: asdasd</p>
-	   <p>damage: </p>
-	   <p>range:</p>
+	  <p style="font-size:16px"><b><%out.println(tank.getString("name")); %></b></p>
+	  <p>speed: <%out.println(tank.getInt("speed")); %></p>
+	  <p>health: <%out.println(tank.getInt("health")); %></p>
+	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
+	  <p>range:<%out.println(tank.getInt("range")); %></p>
 	   <p>price:</p>
 	</div>
 	
@@ -115,7 +154,10 @@
 	<div class="row second-row">
 	  <div class="column" onclick="openTab('b4');" style="background:grey;">
 	    <img src="css/tank_green.png">
-	    <p>GREEN TANK</p>
+<%
+tank=tanksSpec.getJsonObject(3);
+%>
+	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
@@ -123,7 +165,10 @@
 	  </div>
 	  <div class="column" onclick="openTab('b5');" style="background:grey;">
 	    <img src="css/tank_blue.png">
-	    <p>BLUE TANK</p>
+<%
+tank=tanksSpec.getJsonObject(4);
+%>
+	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
