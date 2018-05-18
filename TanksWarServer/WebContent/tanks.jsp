@@ -67,7 +67,7 @@ tank=tanksSpec.getJsonObject(1);
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b3');" style="background:grey;">
-	    <img src="css/tank_dark.png">
+	    <img src="css/tank_sand.png">
 <%
 	tank=tanksSpec.getJsonObject(2);
 %>

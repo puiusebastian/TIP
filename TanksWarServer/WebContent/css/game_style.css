@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label > input + img { /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label > input:checked + img { /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid blue;
+  box-shadow:0  0 15px blue;
+  background-color: #337ab7;
+}
+
+.row-tank{
+    display:flex;
+    justify-content: center;
+    text-align: center;
+}
+.column{
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.tank_name{
+	padding-top:20px ;
+	font-family: 'cs_regular'; 
+	font-size:25px;
+}
+img{
+	padding:5px;
+}
+.submit{
+	border-right: 25px !important;
+    height: 50px;
+    font-size: 25px;
+}

@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
 %>
-<%		Object username =  request.getSession().getAttribute("user");        //********* for getting picked tank by user use:
-		if( username != null){												//********** Object tank =  request.getSession().getAttribute((String)username);
+<%@page import="javax.json.JsonObject"%>
+<%@page import="javax.json.JsonArray"%>
+<%@ page import="servlets.TanksHelper" %>
+<%		Object username =  request.getSession().getAttribute("user");        
+		if( username != null){												
+			JsonArray tanksSpec = TanksHelper.GetTanks();
+			JsonObject t;
 %>
 <!DOCTYPE html PUBLIC>
 <html>
@@ -18,6 +23,8 @@
 	
 	<link rel="stylesheet" href="css/font/font.css">
 	<link rel="stylesheet" href="css/style.css">
+	
+	<link rel="stylesheet" href="css/game_style.css">
 	
 	<script src="js/websocket.js"></script>
 	<script src="js/missile.js"></script>
@@ -44,15 +51,43 @@
 	</nav>
 <%		Object tank =  request.getSession().getAttribute((String)username); 
 		if( !(tank != null)){
+			t=tanksSpec.getJsonObject(0);
 %>
-	<form action="PickTank" method="post">
-	  <input type="radio" name="tank" value="tank1"> tank1<br>
-	  <input type="radio" name="tank" value="tank2"> tank2<br>
-	  <input type="radio" name="tank" value="tank3"> tank3<br>
-	  <input type="radio" name="tank" value="tank4"> tank4<br>
-	  <input type="radio" name="tank" value="tank5"> tank5<br>
-	  <button type="submit">Pick</button>
-	</form> 
+	<div class="row-tank">
+        <form action="PickTank" method="post">
+            	<label class="column">
+            		<input type='radio' name="tank" value="tank1">
+            		<img src="css/tank_dark.png" height="280" width="250">
+                    <p class="tank_name"><%out.println(t.getString("name")); %></p>
+            	</label>  
+        	<% t=tanksSpec.getJsonObject(1);%>    
+            	<label class="column">
+            		<input type='radio' name="tank" value="tank2">
+            		<img src="css/tank_red.png" height="280 " width="250">
+                    <p class="tank_name"><%out.println(t.getString("name")); %></p>
+            	</label>
+            <% t=tanksSpec.getJsonObject(2);%>
+                <label class="column">
+                    <input type='radio' name="tank" value="tank3">
+                    <img src="css/tank_sand.png" height="280 " width="250">
+                    <p class="tank_name"><%out.println(t.getString("name")); %></p>
+                </label>
+            <% t=tanksSpec.getJsonObject(3);%>
+                <label class="column">
+                    <input type='radio' name="tank" value="tank4">
+                    <img src="css/tank_green.png" height="280 " width="250">
+                    <p class="tank_name"><%out.println(t.getString("name")); %></p>
+                </label>
+            <% t=tanksSpec.getJsonObject(4);%>
+                <label class="column">
+                    <input type='radio' name="tank" value="tank5">
+                    <img src="css/tank_blue.png" height="280 " width="250">
+                    <p class="tank_name"><%out.println(t.getString("name")); %></p>
+                </label><br><br><br><br><br><br>
+                <button class="submit btn btn-primary btn-block" type="submit">Start Game</button>
+        </form>
+    </div>
+    
 <%}else{%>
 	<section id="game_section" >
 		<div id="game_wrapper">
