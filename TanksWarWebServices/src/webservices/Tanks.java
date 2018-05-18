@@ -31,7 +31,7 @@ public class Tanks {
 	{
 		return this.health;
 	}
-	public int geDamage()
+	public int getDamage()
 	{
 		return this.damage;
 	}
