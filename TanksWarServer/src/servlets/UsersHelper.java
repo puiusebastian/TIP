@@ -11,21 +11,17 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 
-
-
-
-public class TanksHelper {
-	
-	public static JsonArray GetTanks() {
+public class UsersHelper {
+	public static JsonArray GetUsers() {
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 		
 		WebTarget target = client.target(getBaseURI());
 		
-		JsonArray tanks;
-		tanks=target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
-	
-		return tanks;
+		JsonArray users;
+		users=target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
+		
+		return users;
 
 	}
 	private static URI getBaseURI() {

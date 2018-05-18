@@ -40,7 +40,7 @@
 	    </ul> 
 	  </div>
 	</nav>
-
+	<div class="container">
 	<div class="row">
 	  <div class="column" onclick="openTab('b1');" style="background: grey ;">
 	    <img src="css/tank_dark.png">
@@ -171,7 +171,7 @@ tank=tanksSpec.getJsonObject(4);
 	
 	<footer class="page-footer font-small blue pt-4 mt-4">
 		<div class="footer-copyright py-3 text-center">
-        	© 2018 Copyright
+        	© 2018 Copyright -- Petrasco Ilie, Puiu Sebastian, Ungureanu Ionut, Garila Maria
     	</div>
 	</footer>
 	
@@ -185,6 +185,7 @@ tank=tanksSpec.getJsonObject(4);
 		  document.getElementById(tabName).style.display = "block";
 		}
 	</script>
+	</div>
 </body>
 </html>
 <%}else{

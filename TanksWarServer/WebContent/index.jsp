@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="css/index_style.css">
 </head>
 <body>
-
+	
 	<nav class='navbar navbar-invers title-bar' >
 	  <div class="container-fluid">
 	    <ul class="nav navbar-nav">
@@ -31,12 +31,13 @@
 	    </ul> 
 	  </div>
 	</nav>
-
+	<div class="container">
 	<footer class="page-footer font-small blue pt-4 mt-4">
 		<div class="footer-copyright py-3 text-center">
-        	© 2018 Copyright
+        	© 2018 Copyright -- Petrasco Ilie, Puiu Sebastian, Ungureanu Ionut, Garila Maria
     	</div>
 	</footer>
+	</div>
 </body>
 <%}else{
 	response.sendRedirect("login.jsp");

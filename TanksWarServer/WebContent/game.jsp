@@ -89,7 +89,7 @@
     </div>
     
 <%}else{%>
-	<section id="game_section" style="position: relative">
+	<section id="game_section">
 		<div id="game_wrapper">
 			<div id="canvas_container">
 				<canvas id="game_canvas" width="800" height="600"></canvas>
@@ -108,7 +108,7 @@
 			<div id="end_message" style="display: none"></div>
 		</div>
 	</section>
-	<form method="post" action="EndGame">
+	<form method="post" action="EndGame" style="position: relative">
 	<button type="submit" class="btn btn-primary btn-endgame">End Game</button>
 	</form>
 	<script>gameLobby()</script>
