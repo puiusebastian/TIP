@@ -8,13 +8,11 @@ body {
   background: linear-gradient(to left, #76b852, #8DC26F);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;  
-  
-  /*font-family: 'cs_regular';*/
+  -moz-osx-font-smoothing: grayscale;
 }
 
 section {
-	font-family: 'cs_regular';
+	font-family: 'cs_regular';    
 }
 
 hr {

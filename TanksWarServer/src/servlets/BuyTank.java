@@ -6,19 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class PickTank
+ * Servlet implementation class BuyTank
  */
-@WebServlet("/PickTank")
-public class PickTank extends HttpServlet {
+@WebServlet("/BuyTank")
+public class BuyTank extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PickTank() {
+    public BuyTank() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,17 +27,8 @@ public class PickTank extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		
-		HttpSession session = request.getSession();
-		
-	    String t=request.getParameter("tank"); 
-	    
-	    Object username =  request.getSession().getAttribute("user");
-	    session.setAttribute( (String) username, t);                   //use username to create a session ----  (user, tank_picked)
-		//setting session to expiry in 30 mins
-		session.setMaxInactiveInterval(30*60);
-		response.sendRedirect("game.jsp");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect("tanks.jsp");
 	}
 
 	/**
