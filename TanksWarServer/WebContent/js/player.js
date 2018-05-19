@@ -2,14 +2,21 @@
  * 
  */
 
-function Player(imageSrc, posX, posY, team) {
+function Player(imageSrc, posX, posY, team, username, kills, deaths) {
 	this.image = new Image();
 	this.image.src = imageSrc;
 
 	this.x = posX;
 	this.y = posY;
-	
+	this.fullHealth;
+	this.currentHealth;
 	this.team = team;
+	
+	this.username = username;
+	this.kills = kills;
+	this.deaths = deaths;
+	
+	this.tankId = 1;
 
 	this.alive = true;
 
@@ -27,74 +34,116 @@ function Player(imageSrc, posX, posY, team) {
 
 Player.prototype.draw = function() {
 	var coords = [];
-
+	var rotationAngle = 0;
+	// Get tank tile
+	switch(this.tankId) {
+	case 1:
+		coords = getGraphicElementCoords("spritesheet_black_tank");
+		break;
+	case 2:
+		coords = getGraphicElementCoords("spritesheet_blue_tank");
+		break;
+	case 3:
+		coords = getGraphicElementCoords("spritesheet_green_tank");
+		break;
+	case 4:
+		coords = getGraphicElementCoords("spritesheet_red_tank");
+		break;
+	case 5:
+		coords = getGraphicElementCoords("spritesheet_beige_tank");
+		break;
+	}
+	
 	switch(this.movementDirection) {
 		case "up":
-			/*if(this.animation["up"] <= this.timeBetweenAnimStates) {
-				coords = getGraphicElement("vertical_walk_up_1");
-			}
-			else if(this.animation["up"] <= 2 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("vertical_walk_up_2");
-			}
-			else if(this.animation["up"] <= 3 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("vertical_walk_up_3");
-			}*/
-			
-			//coords = [2, 0, 29, 31];
-			coords = getGraphicElementCoords("tank_move_up");
+			rotationAngle = Math.PI;
 			break;
 		case "right":
-			/*if(this.animation["right"] <= this.timeBetweenAnimStates) {
-				coords = getGraphicElement("horizontal_walk_right_1");
-			}
-			else if(this.animation["right"] <= 2 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("horizontal_walk_right_2");
-			}
-			else if(this.animation["right"] <= 3 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("horizontal_walk_right_3");
-			}*/
-			
-			//coords = [0, 98, 31, 29];
-			coords = getGraphicElementCoords("tank_move_right");
+			rotationAngle = (3 * Math.PI) / 2;
 			break;
 		case "down":
-			/*if(this.animation["down"] <= this.timeBetweenAnimStates) {
-				coords = getGraphicElement("vertical_walk_down_1");
-			}
-			else if(this.animation["down"] <= 2 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("vertical_walk_down_2");
-			}
-			else if(this.animation["down"] <= 3 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("vertical_walk_down_3");
-			}*/
-			
-			//coords = [2, 33, 29, 31];
-			coords = getGraphicElementCoords("tank_move_down");
+			rotationAngle = 0;
 			break;
 		case "left":
-			/*if(this.animation["left"] <= this.timeBetweenAnimStates) {
-				coords = getGraphicElement("horizontal_walk_left_1");
-			}
-			else if(this.animation["left"] <= 2 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("horizontal_walk_left_2");
-			}
-			else if(this.animation["left"] <= 3 * this.timeBetweenAnimStates) {
-				coords = getGraphicElement("horizontal_walk_left_3");
-			}*/
-			
-			//coords = [0, 66, 31, 29];
-			coords = getGraphicElementCoords("tank_move_left");
+			rotationAngle = Math.PI / 2;
 			break;
 	}
 
-	// Determine the character's dimensions
-	var width = tileSize;
-	var height = (coords[3] * tileSize) / coords[2];
+	// Determine character's dimensions
+	var width = playerTileSize;
+	var height = (coords[3] * playerTileSize) / coords[2];
 	// Determine the character's position
-	var posX = this.x - (players[playerIndex].x + tileSize/2) + boardWidth/2;
-	var posY = this.y - (players[playerIndex].y + tileSize/2) + boardHeight/2;
-	//var posY = this.y - (height - tileSize) - (players[playerIndex].y + tileSize/2) + boardHeight/2;
-	// Draw the character
-	canvasContext.drawImage(this.image, coords[0], coords[1], coords[2], coords[3], posX, posY, width, height);
+	var posX;
+	var posY;
+	// Get coordinates on Ox
+	if(players[playerIndex].x + playerTileSize/2 - boardWidth/2 > 0 &&
+			players[playerIndex].x + playerTileSize/2 + boardWidth/2 < mapWidth) {
+		posX = this.x - (players[playerIndex].x + playerTileSize/2) + boardWidth/2;
+	}
+	else {
+		if(players[playerIndex].x + playerTileSize/2 - boardWidth/2 <= 0) {
+			posX = this.x;
+		}
+		if(players[playerIndex].x + playerTileSize/2 + boardWidth/2 >= mapWidth) {
+			posX = this.x - (mapWidth - boardWidth);
+		}
+	}
+	// Get coordinates on Oy
+	if(players[playerIndex].y + playerTileSize/2 - boardHeight/2 > 0 &&
+			players[playerIndex].y + playerTileSize/2 + boardHeight/2 < mapHeight) {
+		posY = this.y - (players[playerIndex].y + playerTileSize/2) + boardHeight/2;
+	}
+	else {
+		if(players[playerIndex].y + playerTileSize/2 - boardHeight/2 <= 0) {
+			posY = this.y;
+		}
+		if(players[playerIndex].y + playerTileSize/2 + boardHeight/2 >= mapHeight) {
+			posY = this.y - (mapHeight - boardHeight);
+		}
+	}
 	
+	// Decrease opacity if the player is dead
+	if(this.alive == false) {
+		canvasContext.globalAlpha = 0.4;
+	}
+	
+	// Draw the character
+	canvasContext.translate(posX + playerTileSize/2, posY + playerTileSize/2);
+	canvasContext.rotate(rotationAngle);
+	canvasContext.drawImage(this.image, coords[0], coords[1], coords[2], coords[3], -playerTileSize/2, -playerTileSize/2, width, height);
+	canvasContext.rotate(-rotationAngle);
+	canvasContext.translate(-(posX + playerTileSize/2), -(posY + playerTileSize/2));
+	
+	// Draw team identifier
+	canvasContext.beginPath();
+	canvasContext.arc(posX, posY, 4, 0, 2 * Math.PI);
+	if(this.team == players[playerIndex].team) {
+		canvasContext.fillStyle = "green";
+	}
+	else {
+		canvasContext.fillStyle = "red";
+	}
+	canvasContext.fill();
+	
+	// Draw health bar
+	if(this.alive == true) {
+		canvasContext.beginPath();
+		canvasContext.rect(posX, posY - 20, playerTileSize, 6);
+		canvasContext.fillStyle = "#919191";
+		canvasContext.fill();
+		
+		canvasContext.beginPath();
+		canvasContext.rect(posX, posY - 20, (this.currentHealth/this.fullHealth)*playerTileSize, 6);
+		canvasContext.fillStyle = "green";
+		canvasContext.fill();
+		
+		canvasContext.beginPath();
+		canvasContext.rect(posX, posY - 20, playerTileSize, 6);
+		canvasContext.lineWidth = 1.5;
+		canvasContext.strokeStyle = "#003300";
+		canvasContext.stroke();
+	}
+	
+	// Restore opacity
+	canvasContext.globalAlpha = 1;
 }

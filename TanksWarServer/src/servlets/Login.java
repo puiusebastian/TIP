@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,8 +61,6 @@ public class Login extends HttpServlet {
 		
 		boolean responseFromRest=target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
 				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class);
-		
-		
 		
 		if(responseFromRest) {
 			System.out.println("Successful login");

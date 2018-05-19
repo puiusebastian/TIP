@@ -13,40 +13,79 @@ public class PushTimeService implements Runnable {
     
     private static PushTimeService instance;
     
-    private DateTime roundStartTime = new DateTime();
-    private int roundNumber = 0;
+    private static DateTime roundStartTime = new DateTime();
+    private static int roundNumber = 1;
     private int minutesPerRound = 5;
-    private int roundsPerGame = 5;
+    private int roundsPerGame = 10;
+    private int winnerTeam = 0;
+    private boolean gameEnded = false;
+    private DateTime gameEndedTime;
+    
+    private int flagCapturingMinutesNeeded = 2;
+    private static DateTime firstTeamFlagCapturingStartTime;
+    private static DateTime secondTeamFlagCapturingStartTime;
+    
+    private int firstTeamFlagLeftCoord = 19 * tileSize;
+    private int firstTeamFlagRightCoord = 25 * tileSize - 1;
+    private int firstTeamFlagTopCoord = 0 * tileSize;
+    private int firstTeamFlagBottomCoord = 5 * tileSize - 1;
+    
+    private int secondTeamFlagLeftCoord = 26 * tileSize;
+    private int secondTeamFlagRightCoord = 32 * tileSize - 1;
+    private int secondTeamFlagTopCoord = 34 * tileSize;
+    private int secondTeamFlagBottomCoord = 40 * tileSize - 1;
     
     // Game configs
-    private int mapWidth = 1400;
-    private int mapHeight = 1200;
-    private int playerWindowWidth = 800;
-    private int playerWindowHeight = 500;
-    private static int tileSize = 30;
-    private static int missileSize = 10;
-    private static int firstTeamPlayerSpawnPointX = 100;
-    private static int firstTeamPlayerSpawnPointY = 250;
-    private static int secondTeamPlayerSpawnPointX = 400;
-    private static int secondTeamPlayerSpawnPointY = 250;
+    private static int tileSize = 64;
+    private int mapRows = 40;
+    private int mapColumns = 51;
+    private int mapWidth = tileSize * mapColumns;
+    private int mapHeight = tileSize * mapRows;
+    private int playerWindowWidth = 1088;
+    private int playerWindowHeight = 576;
+    
+    private static int playerTileSize = 42;
+    private static int missileTileSize = 10;
+    private static int firstTeamPlayerSpawnPointX = 5 * tileSize - playerTileSize/2;
+    private static int firstTeamPlayerSpawnPointY = 20 * tileSize - playerTileSize/2;
+    private static int secondTeamPlayerSpawnPointX = 46 * tileSize - playerTileSize/2;
+    private static int secondTeamPlayerSpawnPointY = 20 * tileSize - playerTileSize/2;
     
     private static Map<Session, Player> playersMap = Collections.synchronizedMap(new HashMap<Session, Player>());
     private static List<Missile> missilesList = Collections.synchronizedList(new ArrayList<Missile>());
     private static int firstTeamNumberOfPlayers = 0;
     private static int secondTeamNumberOfPlayers = 0;
-    private int firstTeamScore = 0;
-    private int secondTeamScore = 0;
+    private static int firstTeamScore = 0;
+    private static int secondTeamScore = 0;
     
     private PushTimeService() {}
     
     public static void add(Session s) {
     	if(firstTeamNumberOfPlayers <= secondTeamNumberOfPlayers) {
-    		playersMap.put(s, new Player(firstTeamPlayerSpawnPointX, firstTeamPlayerSpawnPointY, 1));
+    		Player newPlayer = new Player(firstTeamPlayerSpawnPointX, firstTeamPlayerSpawnPointY, 1);
+    		if(playersMap.keySet().size() > 0) {
+    			newPlayer.setAlive(false);
+    		}
+    		playersMap.put(s, newPlayer);
     		firstTeamNumberOfPlayers++;
     	}
     	else {
-    		playersMap.put(s, new Player(secondTeamPlayerSpawnPointX, secondTeamPlayerSpawnPointY, 2));
+    		Player newPlayer = new Player(secondTeamPlayerSpawnPointX, secondTeamPlayerSpawnPointY, 2);
+    		if(playersMap.keySet().size() > 0) {
+    			newPlayer.setAlive(false);
+    		}
+    		playersMap.put(s, newPlayer);
     		secondTeamNumberOfPlayers++;
+    	}
+    	if(playersMap.keySet().size() == 2) {
+    		//firstTeamScore = 0;
+    		//secondTeamScore = 0;
+    		roundNumber = 1;
+    		for(Player player : playersMap.values()) {
+    			player.setAlive(false);
+    		}
+    		roundStartTime = new DateTime();
+    		initializeGame();
     	}
     }
     
@@ -58,26 +97,32 @@ public class PushTimeService implements Runnable {
     }
     
     public static void launchMissile(Session session, Player player) {
+    	for(Missile missile : missilesList) {
+    		if(playersMap.get(missile.getPlayerId()) == player) {
+    			return;
+    		}
+    	}
+    	
     	int posX = player.getPosX(), posY = player.getPosY();
     	switch(player.getMovementDirection()) {
     	case "up":
-    		posX = player.getPosX() + tileSize/2 - missileSize/2;
-    		posY = player.getPosY() - missileSize;
+    		posX = player.getPosX() + playerTileSize/2 - missileTileSize/2;
+    		posY = player.getPosY() - missileTileSize;
     		break;
     	case "down":
-    		posX = player.getPosX() + tileSize/2 - missileSize/2;
-    		posY = player.getPosY() + tileSize;
+    		posX = player.getPosX() + playerTileSize/2 - missileTileSize/2;
+    		posY = player.getPosY() + playerTileSize;
     		break;
     	case "left":
-    		posX = player.getPosX() - missileSize;
-    		posY = player.getPosY() + tileSize/2 - missileSize/2;
+    		posX = player.getPosX() - missileTileSize;
+    		posY = player.getPosY() + playerTileSize/2 - missileTileSize/2;
     		break;
     	case "right":
-    		posX = player.getPosX() + tileSize;
-    		posY = player.getPosY() + tileSize/2 - missileSize/2;
+    		posX = player.getPosX() + playerTileSize;
+    		posY = player.getPosY() + playerTileSize/2 - missileTileSize/2;
     		break;
     	}
-    	Missile missile = new Missile(session, posX, posY, 100, player.getMovementDirection(), 3);
+    	Missile missile = new Missile(session, posX, posY, player.getRange(), player.getMovementDirection(), 3);
     	missilesList.add(missile);
     }
     
@@ -134,17 +179,20 @@ public class PushTimeService implements Runnable {
     	Iterator<Missile> missilesListIterator = missilesList.iterator();
         while(missilesListIterator.hasNext()) {
         	Missile missile = missilesListIterator.next();
-        	int missileCenterX = missile.getPosX() + missileSize;
-        	int missileCenterY = missile.getPosY() + missileSize;
+        	int missileCenterX = missile.getPosX() + missileTileSize;
+        	int missileCenterY = missile.getPosY() + missileTileSize;
         	for(Player player : playersMap.values()) {
-        		if(player.getTeam() != playersMap.get(missile.getPlayerId()).getTeam()) {
+        		if(player.isAlive() == true && player.getTeam() != playersMap.get(missile.getPlayerId()).getTeam()) {
 	        		int playerLeftEdge = player.getPosX();
 	        		int playerRightEdge = playerLeftEdge + tileSize;
 	        		int playerTopEdge = player.getPosY();
 	        		int playerBottomEdge = playerTopEdge + tileSize;
 	        		if(playerLeftEdge <= missileCenterX && missileCenterX <= playerRightEdge
 	        				&& playerTopEdge <= missileCenterY && missileCenterY <= playerBottomEdge) {
-	        			player.setAlive(false);
+	        			player.takeHit(playersMap.get(missile.getPlayerId()).getDamage());
+	        			if(player.isAlive() == false) {
+	        				playersMap.get(missile.getPlayerId()).increaseKills();
+	        			}
 	        			missilesListIterator.remove();
 	        			return;
 	        		}
@@ -153,7 +201,46 @@ public class PushTimeService implements Runnable {
         }
     }
     
-    private void initializeGame() {
+    private void checkFlagCapturing() {
+    	boolean firstTeamFlagBeingCaptured = false;;
+    	boolean secondTeamFlagBeingCaptured = false;
+    	for(Player player : playersMap.values()) {
+    		int centerX = player.getPosX() + playerTileSize / 2;
+			int centerY = player.getPosY() + playerTileSize / 2;
+			
+			// Check first team flag
+    		if(player.isAlive() == true && player.getTeam() == 2 && firstTeamFlagBeingCaptured == false) {
+    			if(firstTeamFlagLeftCoord <= centerX && centerX <= firstTeamFlagRightCoord &&
+    					firstTeamFlagTopCoord <= centerY && centerY <= firstTeamFlagBottomCoord) {
+    				firstTeamFlagBeingCaptured = true;
+    			}
+    		}
+			
+    		// Check second team flag
+    		if(player.isAlive() == true && player.getTeam() == 1 && secondTeamFlagBeingCaptured == false) {
+    			if(secondTeamFlagLeftCoord <= centerX && centerX <= secondTeamFlagRightCoord &&
+    					secondTeamFlagTopCoord <= centerY && centerY <= secondTeamFlagBottomCoord) {
+    				secondTeamFlagBeingCaptured = true;
+    			}
+    		}
+    	}
+    	
+    	if(firstTeamFlagBeingCaptured == true && firstTeamFlagCapturingStartTime == null) {
+    		firstTeamFlagCapturingStartTime = new DateTime();
+    	}
+    	else if(firstTeamFlagBeingCaptured == false && firstTeamFlagCapturingStartTime != null) {
+    		firstTeamFlagCapturingStartTime = null;
+    	}
+    	
+    	if(secondTeamFlagBeingCaptured == true && secondTeamFlagCapturingStartTime == null) {
+    		secondTeamFlagCapturingStartTime = new DateTime();
+    	}
+    	else if(secondTeamFlagBeingCaptured == false && secondTeamFlagCapturingStartTime != null) {
+    		secondTeamFlagCapturingStartTime = null;
+    	}
+    }
+    
+    private static void initializeGame() {
     	for(Player player : playersMap.values()) {
     		if(player.getTeam() == 1) {
     			player.setPosX(firstTeamPlayerSpawnPointX);
@@ -164,51 +251,104 @@ public class PushTimeService implements Runnable {
     			player.setPosY(secondTeamPlayerSpawnPointY);
     		}
     		
-    		player.setAlive(true);
+    		player.revive();
     	}
+    	
+    	firstTeamFlagCapturingStartTime = null;
+    	secondTeamFlagCapturingStartTime = null;
     }
     
     private void updateGameState() {
-    	boolean endOfRound = false;
-    	
-    	// Check if all players from a team are dead
-    	if(firstTeamNumberOfPlayers != 0 && secondTeamNumberOfPlayers != 0) {
-	    	int firstTeamAlivePlayers = 0;
-	    	int secondTeamAlivePlayers = 0;
-	    	for(Player player : playersMap.values()) {
-	    		if(player.isAlive() == true) {
-	    			if(player.getTeam() == 1) {
-	    				firstTeamAlivePlayers++;
-	    			}
-	    			else if(player.getTeam() == 2) {
-	    				secondTeamAlivePlayers++;
-	    			}
-	    		}
-	    	}
-	    	if(firstTeamAlivePlayers == 0 && secondTeamAlivePlayers != 0) {
-	    		secondTeamScore++;
-	    		endOfRound = true;
-	    	}
-	    	if(firstTeamAlivePlayers != 0 && secondTeamAlivePlayers == 0) {
-	    		firstTeamScore++;
-	    		endOfRound = true;
-	    	}
-    	}
-    	
-    	// Check if time is up for the current round
-    	if(endOfRound == false) {
+    	if(gameEnded == true) {
     		DateTime currentTime = new DateTime();
-            Period roundTimeElapsed = new Period(roundStartTime, currentTime);
-            if(roundTimeElapsed.getMinutes() == minutesPerRound) {
-            	endOfRound = true;
-            }
+            Period waitingTimeElapsed = new Period(gameEndedTime, currentTime);
+    		if(waitingTimeElapsed.getSeconds() >= 5) {
+	    		firstTeamScore = 0;
+	    		secondTeamScore = 0;
+	    		roundStartTime = new DateTime();
+	    		initializeGame();
+	    		gameEndedTime = null;
+	    		roundNumber = 1;
+	    		gameEnded = false;
+    		}
     	}
-    	
-    	// If current round has ended, reinitialize the game
-    	if(endOfRound == true) {
-    		roundNumber++;
-    		roundStartTime = new DateTime();
-    		initializeGame();
+    	else if(playersMap.keySet().size() > 1) {
+	    	boolean endOfRound = false;
+	    	
+	    	// Check if all players from a team are dead
+	    	if(firstTeamNumberOfPlayers != 0 && secondTeamNumberOfPlayers != 0) {
+		    	int firstTeamAlivePlayers = 0;
+		    	int secondTeamAlivePlayers = 0;
+		    	for(Player player : playersMap.values()) {
+		    		if(player.isAlive() == true) {
+		    			if(player.getTeam() == 1) {
+		    				firstTeamAlivePlayers++;
+		    			}
+		    			else if(player.getTeam() == 2) {
+		    				secondTeamAlivePlayers++;
+		    			}
+		    		}
+		    	}
+		    	if(firstTeamAlivePlayers == 0 && secondTeamAlivePlayers != 0) {
+		    		secondTeamScore++;
+		    		endOfRound = true;
+		    	}
+		    	if(firstTeamAlivePlayers != 0 && secondTeamAlivePlayers == 0) {
+		    		firstTeamScore++;
+		    		endOfRound = true;
+		    	}
+	    	}
+	    	
+	    	// Check if time is up for the current round
+	    	if(endOfRound == false) {
+	    		DateTime currentTime = new DateTime();
+	            Period roundTimeElapsed = new Period(roundStartTime, currentTime);
+	            if(roundTimeElapsed.getMinutes() == minutesPerRound) {
+	            	endOfRound = true;
+	            }
+	    	}
+	    	
+	    	// Check if flags have been captured
+	    	if(firstTeamFlagCapturingStartTime != null) {
+	    		DateTime currentTime = new DateTime();
+	            Period capturingTimeElapsed = new Period(firstTeamFlagCapturingStartTime, currentTime);
+	            if(capturingTimeElapsed.getMinutes() >= flagCapturingMinutesNeeded) {
+	            	secondTeamScore++;
+	            	endOfRound = true;
+	            }
+	    	}
+	    	if(secondTeamFlagCapturingStartTime != null) {
+	    		DateTime currentTime = new DateTime();
+	            Period capturingTimeElapsed = new Period(secondTeamFlagCapturingStartTime, currentTime);
+	            if(capturingTimeElapsed.getMinutes() >= flagCapturingMinutesNeeded) {
+	            	firstTeamScore++;
+	            	endOfRound = true;
+	            }
+	    	}
+	    	
+	    	// If current round has ended, reinitialize the game
+	    	if(endOfRound == true) {
+	    		roundNumber++;
+	    		
+	    		// Check if the game has ended
+	    		if(roundNumber > roundsPerGame) {
+	    			gameEnded = true;
+	    			if(firstTeamScore > secondTeamScore) {
+	    				winnerTeam = 1;
+	    			}
+	    			else if(firstTeamScore < secondTeamScore) {
+	    				winnerTeam = 2;
+	    			}
+	    			else {
+	    				winnerTeam = 0;
+	    			}
+	    			gameEndedTime = new DateTime();
+	    			return;
+	    		}
+	    		
+	    		roundStartTime = new DateTime();
+	    		initializeGame();
+	    	}
     	}
     }
     
@@ -225,7 +365,7 @@ public class PushTimeService implements Runnable {
                 for (Session key : playersMap.keySet()) {
                 	Player player = playersMap.get(key);
                 	
-                	player.Update();
+                	player.Update(mapWidth, mapHeight, playerTileSize);
                 }
                 
                 // Update missiles
@@ -243,6 +383,9 @@ public class PushTimeService implements Runnable {
                 // Check missiles collision with players
                 checkMissilesCollisionWithPlayers();
                 
+                // Check if flags are being captured
+                checkFlagCapturing();
+                
                 // Send data to users
                 DateTime currentTime = new DateTime();
                 Period roundTimeElapsed = new Period(roundStartTime, currentTime);
@@ -253,13 +396,34 @@ public class PushTimeService implements Runnable {
                 messages[0].setNumberOfPlayers(playersMap.keySet().size());
                 messages[0].setNumberOfMissiles(missilesList.size());
                 messages[0].setTileSize(PushTimeService.tileSize);
-                messages[0].setMissileSize(PushTimeService.missileSize);
+                messages[0].setMissileTileSize(PushTimeService.missileTileSize);
+                messages[0].setPlayerTileSize(playerTileSize);
                 messages[0].setRoundTimeElapsed(Integer.toString(roundTimeElapsed.getMinutes()) + ":" + Integer.toString(roundTimeElapsed.getSeconds()));
-                messages[0].setRoundNumber(roundNumber);
+                messages[0].setRoundNumber(roundsPerGame - roundNumber);
                 messages[0].setFirstTeamScore(firstTeamScore);
                 messages[0].setSecondTeamScore(secondTeamScore);
                 messages[0].setPlayerWindowWidth(playerWindowWidth);
                 messages[0].setPlayerWindowHeight(playerWindowHeight);
+                messages[0].setMapWidth(mapWidth);
+                messages[0].setMapHeight(mapHeight);
+                messages[0].setGameEnded(gameEnded);
+                messages[0].setWinnerTeam(winnerTeam);
+                if(firstTeamFlagCapturingStartTime != null) {
+                	currentTime = new DateTime();
+    	            Period capturingTimeElapsed = new Period(firstTeamFlagCapturingStartTime, currentTime);
+    	            messages[0].setFirstTeamFlagCapturedSeconds(capturingTimeElapsed.getMinutes() * 60 + capturingTimeElapsed.getSeconds());
+                }
+                else {
+                	messages[0].setFirstTeamFlagCapturedSeconds(0);
+                }
+                if(secondTeamFlagCapturingStartTime != null) {
+                	currentTime = new DateTime();
+    	            Period capturingTimeElapsed = new Period(secondTeamFlagCapturingStartTime, currentTime);
+    	            messages[0].setSecondTeamFlagCapturedSeconds(capturingTimeElapsed.getMinutes() * 60 + capturingTimeElapsed.getSeconds());
+                }
+                else {
+                	messages[0].setSecondTeamFlagCapturedSeconds(0);
+                }
                 
                 int index = 1;
                 for (Session key : playersMap.keySet()) {
@@ -268,8 +432,13 @@ public class PushTimeService implements Runnable {
                 	messages[index] = new Message();
                 	messages[index].setPosX(player.getPosX());
                 	messages[index].setPosY(player.getPosY());
+                	messages[index].setPlayerFullHealth(player.getFullHealth());
+                	messages[index].setPlayerCurrentHealth(player.getCurrentHealth());
                 	messages[index].setTeam(player.getTeam());
                 	messages[index].setAlive(player.isAlive());
+                	messages[index].setUsername(player.getUsername());
+                	messages[index].setKills(player.getKills());
+                	messages[index].setDeaths(player.getDeaths());
                 	messages[index].setMovementDirection(player.getMovementDirection());
                 	
                 	index++;
@@ -287,11 +456,9 @@ public class PushTimeService implements Runnable {
                 for (Session key : playersMap.keySet()) {
                 	messages[0].setIndex(index);
                 	index++;
-                	String messageToSend = msgEnc.encode(messages);
+                	
                     if (key.isOpen()) {
-                    	//System.out.println(msgEnc.encode(messages));
-                    	//System.out.println(messageToSend);
-                        //s.getBasicRemote().sendText(Integer.toString(x));
+                    	String messageToSend = msgEnc.encode(messages);
                     	key.getBasicRemote().sendText(messageToSend);
                     } else {
                     	if(playersMap.get(key).getTeam() == 1) {

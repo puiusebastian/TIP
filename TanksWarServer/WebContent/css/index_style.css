@@ -1,11 +1,18 @@
 @charset "UTF-8";
+
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
+container{
+	position:relative;
+	min-height:100%;
+}
 .title-bar{
     font-size: 35px;
     height: 100px;
-}
-
-.container-fluid{
- 
 }
 
 a{
@@ -33,4 +40,15 @@ a:hover{
 
 .glyphicon-home{
     font-size: 27px;
+}
+
+.page-footer{
+	position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #484848  ;
+    color: white;
+    text-align: center;
+    font-size:20px;
 }
