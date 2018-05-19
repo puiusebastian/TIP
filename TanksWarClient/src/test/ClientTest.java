@@ -35,17 +35,23 @@ public class ClientTest {
 				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class));
 		
 		//display users
-		System.out.println(target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(String.class));
+		System.out.println(target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(String.class));
+		System.out.println(target.path("api/ssw/getTanks").request().accept(MediaType.APPLICATION_JSON).get(String.class));
 		//save list
 		//List<Users> users=new ArrayList<Users>();
-		JsonArray users;
-		users=target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
-		System.out.println(users);//display all jsonArray
-		for(int i=0;i<users.size();i++)
+		JsonArray tanks;
+		tanks=target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
+		System.out.println(tanks);//display all jsonArray
+		for(int i=0;i<tanks.size();i++)
 		{
-			JsonObject user=users.getJsonObject(i);
-			System.out.println(user.getString("username")); //display by JsonObject
+			JsonObject tank=tanks.getJsonObject(i);
+			System.out.println(tank.getString("name")+" has "+tank.getInt("health")+" HP;"); //display by JsonObject
 		}
+		//fara nebuneli
+		WebTarget secTarget=client.target("http://localhost:8888/api/ssw/showTanks");
+		System.out.println(secTarget.request().accept(MediaType.TEXT_PLAIN).get(String.class));
+		
+		
 		
 	}
 

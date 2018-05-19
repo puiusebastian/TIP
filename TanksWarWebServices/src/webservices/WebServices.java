@@ -22,6 +22,13 @@ public class WebServices {
 	}
 	
 	@GET
+	@Path("/showTanks")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String showTanks(){
+		return ""+DBManager.getInstance().getTanksList();
+	}
+	
+	@GET
 	@Path("/getUT")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User_tank> getUT(){

@@ -10,7 +10,7 @@ public class Tanks {
 	private int tank_range;
 	private String tank_name;
 	
-	public Tanks(int id, int sp, int heal, int dam, int range, String name)
+	public Tanks(int id, int sp, int heal,int dam, int range, String name)
 	{
 		this.tank_id=id;
 		this.speed=sp;
@@ -31,7 +31,7 @@ public class Tanks {
 	{
 		return this.health;
 	}
-	public int geDamage()
+	public int getDamage()
 	{
 		return this.damage;
 	}
