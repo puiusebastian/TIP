@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.JsonObject;
+
+
+
 
 public class DBManager {
 	private static final String URL = "jdbc:mysql://localhost:3306/tanks_war";
@@ -58,7 +62,7 @@ public class DBManager {
 			st.execute("select * from tanks");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("tank_range"),rs.getString("tank_name"));
+				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("missile_range"),rs.getString("tank_name"));
 				tanksList.add(tank);
 			}
 			// st.close();
@@ -83,6 +87,39 @@ public class DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	//insert User
+	public boolean insertU(JsonObject info) {
+		try(Statement st=conn.createStatement()){
+			st.execute("insert into users values(null,'"+info.getString("username")+"','"+info.getString("password")+"','"+info.getString("name")+"','"+info.getString("email")+"',"+info.getInt("age")+")");
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//delete user
+	public boolean deleteU(int id) {
+		try(Statement st=conn.createStatement()){
+			st.execute("delete from users where id="+id);
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//update user
+	public boolean updateU(int id,JsonObject info) {
+		try(Statement st=conn.createStatement()){
+			st.execute("update users set username='"+info.getString("username")+"',password='"+info.getString("password")+"',name='"+info.getString("name")+"',email='"+info.getString("email")+"',age="+info.getInt("age")+" where id="+id);
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

@@ -34,24 +34,37 @@ public class ClientTest {
 		System.out.println(target.path("api").path("checkuser").request(MediaType.TEXT_PLAIN)
 				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class));
 		
-		//display users
-		System.out.println(target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(String.class));
+		
+		System.out.println(target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(String.class));
 		System.out.println(target.path("api/ssw/getTanks").request().accept(MediaType.APPLICATION_JSON).get(String.class));
 		//save list
 		//List<Users> users=new ArrayList<Users>();
 		JsonArray tanks;
 		tanks=target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
-		System.out.println(tanks);//display all jsonArray
-		for(int i=0;i<tanks.size();i++)
-		{
-			JsonObject tank=tanks.getJsonObject(i);
-			System.out.println(tank.getString("name")+" has "+tank.getInt("health")+" HP;"); //display by JsonObject
+		System.out.println("huraa >> "+tanks);//display all jsonArray
+		
+		//test insert user
+		/*JsonObject userObject=Json.createReader(new StringReader("{\"username\":\"player\",\"password\":\"player\",\"name\":\"player\",\"email\":\"player@yahoo.com\",\"age\":22}")).readObject();
+		if(target.path("api/ssw/insertuser").request(MediaType.TEXT_PLAIN).post(Entity.entity(userObject, MediaType.APPLICATION_JSON),Boolean.class)){
+			System.out.println("User was inserted!");
 		}
-		//fara nebuneli
-		WebTarget secTarget=client.target("http://localhost:8888/api/ssw/showTanks");
-		System.out.println(secTarget.request().accept(MediaType.TEXT_PLAIN).get(String.class));
+		else {
+			System.out.println("User wasn't inserted!");
+		}*/
 		
-		
+		//test delete, id is autoincrement so after a delete it won't be the same as the last time
+		/*if(target.path("api/ssw/delete").path("5").request(MediaType.TEXT_PLAIN).accept(MediaType.APPLICATION_JSON).delete(Boolean.class)) {
+			System.out.println("User was deleted!");
+		}else {
+			System.out.println("User wasn't deleted!");
+		}*/
+		JsonObject userUpdateObject=Json.createReader(new StringReader("{\"username\":\"player\",\"password\":\"player\",\"name\":\"Lucifer\",\"email\":\"player@yahoo.com\",\"age\":22}")).readObject();
+		if(target.path("api/ssw/update/14").request(MediaType.TEXT_PLAIN).put(Entity.entity(userUpdateObject, MediaType.APPLICATION_JSON),Boolean.class)){
+			System.out.println("User was updated!");
+		}
+		else {
+			System.out.println("User wasn't updated!");
+		}
 		
 	}
 

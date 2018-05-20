@@ -1,8 +1,12 @@
 package webservices;
 import java.util.List;
 
+import javax.json.JsonObject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 @Path("/ssw")
@@ -34,4 +38,16 @@ public class WebServices {
 	public List<User_tank> getUT(){
 		return DBManager.getInstance().getUTList();
 	}
+	
+	//insert new user
+	@POST
+	@Path("/insertuser")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean insertUser(JsonObject info)
+	{
+		return DBManager.getInstance().insertU(info);
+	}
+	
+	
+
 }
