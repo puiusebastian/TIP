@@ -62,7 +62,7 @@ public class DBManager {
 			st.execute("select * from tanks");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("missile_range"),rs.getString("tank_name"));
+				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("tank_range"),rs.getString("tank_name"));
 				tanksList.add(tank);
 			}
 			// st.close();
