@@ -1,7 +1,7 @@
 create database Tanks_War;
 use Tanks_War;
 create table users(id INT unsigned NOT NULL AUTO_INCREMENT, 
-username varchar(30) NOT NULL,
+username varchar(30) NOT NULL UNIQUE,
 password varchar(30) NOT NULL,
 CONSTRAINT PK_USERS PRIMARY KEY(id)); 
 create table tanks(tank_id INT unsigned NOT NULL AUTO_INCREMENT, 
@@ -34,7 +34,6 @@ SET name = 'Sebastian Puiu', email = 'sebastianpuiu@gmail.com', age='23'
 WHERE id=1;
 create table tank_picked(user varchar(30),
 tank INT unsigned NOT NULL,
---UNIQUE (user,tank),
 CONSTRAINT user_pk PRIMARY key(user),
 CONSTRAINT user_fk FOREIGN key (user) references users(username),
 CONSTRAINT tank_fk FOREIGN key (tank) references tanks(tank_id));
