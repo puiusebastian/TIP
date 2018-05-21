@@ -28,19 +28,19 @@ public class TankPicked {
 		WebTarget target = client.target(getBaseURI());
 		
 		JsonArray tanks,users_tanks;
-		Integer id=-1;
+		Integer id=null;
 		tanks=target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
-		
 		users_tanks=target.path("api/ssw/gettankpicked").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
 		JsonObject user_tank,tank=null;
 		for(int i=0;i<users_tanks.size();i++)
 		{
 			user_tank=users_tanks.getJsonObject(i);
-			if(user_tank.getString("userTP")==username) {
+			if(username.equals((String)user_tank.getString("userTP"))) {
 				id=user_tank.getInt("tankTP");
 				break;
 			}
 		}
+		System.out.println(id);
 		for(int i=0;i<tanks.size();i++) {
 			tank=tanks.getJsonObject(i);
 			if(id==tank.getInt("id")) {
