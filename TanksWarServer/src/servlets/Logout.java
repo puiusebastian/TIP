@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.client.Client;
+import javax.servlet.http.Cookie;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -53,7 +54,16 @@ public class Logout extends HttpServlet {
 		}
 	    session.setAttribute( (String) username, null); 
 	    
-		session.invalidate(); 	       
+		session.invalidate(); 	     
+		
+		Cookie[] cookies = request.getCookies();
+	    if (cookies != null)
+	        for (Cookie cookie : cookies) {
+	            cookie.setValue("");
+	            cookie.setPath("/");
+	            cookie.setMaxAge(0);
+	            response.addCookie(cookie);
+	        }
 		
     	response.sendRedirect("index.jsp");
 	}

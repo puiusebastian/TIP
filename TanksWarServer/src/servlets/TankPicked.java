@@ -40,7 +40,7 @@ public class TankPicked {
 				break;
 			}
 		}
-		System.out.println(id);
+
 		for(int i=0;i<tanks.size();i++) {
 			tank=tanks.getJsonObject(i);
 			if(id==tank.getInt("id")) {
