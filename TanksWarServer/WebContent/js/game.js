@@ -278,12 +278,24 @@ function mapDraw() {
 				case 25:
 					coords = getGraphicElementCoords("tilesheet_road_brown_top_bottom_left_right");
 					break;
+				case 26:
+					coords = getGraphicElementCoords("tilesheet_grass");
+					break;
 				default:
 					coords = [0, 0, 0, 0];
 				}
 				
 				// Draw the tile
 				canvasContext.drawImage(tilesImage, coords[0], coords[1], coords[2], coords[3], x, y, tileSize, tileSize);
+				
+				// Draw obstacles
+				switch(map[i][j]) {
+				case 26:
+					var img = new Image();
+					img.src = getImage("small_green_tree");
+					canvasContext.drawImage(img, 0, 0, 72, 72, x, y, tileSize, tileSize);
+					break;
+				}
 			}
 		}
 	}

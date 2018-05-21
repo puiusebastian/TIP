@@ -1,12 +1,25 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.net.URI;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.client.Entity;
+import org.glassfish.jersey.client.ClientConfig;
+
 
 /**
  * Servlet implementation class PickTank

@@ -120,34 +120,6 @@ public class Player {
 	}
 
 	public void Update(int mapWidth, int mapHeight, int playerTileSize) {
-		// Update movement direction
-		/*switch(this.movementBuffer) {
-    	case "up":
-    		this.moveUp = true;
-    		break;
-    	case "down":
-    		this.moveDown = true;
-    		break;
-    	case "left":
-    		this.moveLeft = true;
-    		break;
-    	case "right":
-    		this.moveRight = true;
-    		break;
-    	case "no_up":
-    		this.moveUp = false;
-    		break;
-    	case "no_down":
-    		this.moveDown = false;
-    		break;
-    	case "no_left":
-    		this.moveLeft = false;
-    		break;
-    	case "no_right":
-    		this.moveRight = false;
-    		break;
-    	}
-		*/
 		// Move the player
 		if(this.moveUp == true) {
 			if(this.posY - this.speed >= 0) {

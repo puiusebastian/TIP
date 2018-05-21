@@ -30,6 +30,9 @@ function getImage(name) {
 		case "spritesheet":
 			return 'assets/onlyObjects_default.png';
 			break;
+		case "small_green_tree":
+			return 'assets/treeGreen_small.png';
+			break;
 	}
 }
 

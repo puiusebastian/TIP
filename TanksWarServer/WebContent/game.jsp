@@ -56,31 +56,31 @@
 	<div class="row-tank">
         <form action="PickTank" method="post">
             	<label class="column">
-            		<input type='radio' name="tank" value="tank1">
+            		<input type='radio' name="tank" value=1>
             		<img src="css/tank_dark.png" height="280" width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
             	</label>  
         	<% t=tanksSpec.getJsonObject(1);%>    
             	<label class="column">
-            		<input type='radio' name="tank" value="tank2">
+            		<input type='radio' name="tank" value=2>
             		<img src="css/tank_red.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
             	</label>
             <% t=tanksSpec.getJsonObject(2);%>
                 <label class="column">
-                    <input type='radio' name="tank" value="tank3">
+                    <input type='radio' name="tank" value=3>
                     <img src="css/tank_sand.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label>
             <% t=tanksSpec.getJsonObject(3);%>
                 <label class="column">
-                    <input type='radio' name="tank" value="tank4">
+                    <input type='radio' name="tank" value=4>
                     <img src="css/tank_green.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label>
             <% t=tanksSpec.getJsonObject(4);%>
                 <label class="column">
-                    <input type='radio' name="tank" value="tank5">
+                    <input type='radio' name="tank" value=5>
                     <img src="css/tank_blue.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label><br><br><br><br><br><br>
