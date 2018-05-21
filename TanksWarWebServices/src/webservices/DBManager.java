@@ -89,6 +89,22 @@ public class DBManager {
 			return null;
 		}
 	}
+	//return list of tank_picked
+	public List<TankPicked> getTPList(){
+		try(Statement st=conn.createStatement()){
+			List<TankPicked>  tpList= new ArrayList<TankPicked>();
+			st.execute("select * from tank_picked");
+			ResultSet rs = st.getResultSet();
+			while (rs.next()) {
+				TankPicked t = new TankPicked(rs.getString("user"),rs.getInt("tank"));
+				tpList.add(t);
+			}
+			return tpList;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	//insert User
 	public boolean insertU(JsonObject info) {
@@ -101,10 +117,32 @@ public class DBManager {
 		}
 	}
 	
+	//insert in tank_picked
+		public boolean insertTP(JsonObject info) {
+			try(Statement st=conn.createStatement()){
+				st.execute("insert into tank_picked values('"+info.getString("user")+"',"+info.getInt("tank")+")");
+				return true;
+			}catch(SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+	
 	//delete user
 	public boolean deleteU(int id) {
 		try(Statement st=conn.createStatement()){
 			st.execute("delete from users where id="+id);
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//delete in tank_picked
+	public boolean deleteTP(String user) {
+		try(Statement st=conn.createStatement()){
+			st.execute("delete from tank_picked where user='"+user+"'");
 			return true;
 		}catch(SQLException e) {
 			e.printStackTrace();

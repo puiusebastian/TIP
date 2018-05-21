@@ -48,6 +48,22 @@ public class WebServices {
 		return DBManager.getInstance().insertU(info);
 	}
 	
+	//get list of table tank_picked
+	@GET
+	@Path("/gettankpicked")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TankPicked> getTP(){
+		return DBManager.getInstance().getTPList();
+	}
+	
+	//insert in tank_picked
+	@POST
+	@Path("/inserttankpicked")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean insertTankPicked(JsonObject info)
+	{
+		return DBManager.getInstance().insertTP(info);
+	}
 	
 
 }

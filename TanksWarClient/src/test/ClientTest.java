@@ -58,13 +58,34 @@ public class ClientTest {
 		}else {
 			System.out.println("User wasn't deleted!");
 		}*/
-		JsonObject userUpdateObject=Json.createReader(new StringReader("{\"username\":\"player\",\"password\":\"player\",\"name\":\"Lucifer\",\"email\":\"player@yahoo.com\",\"age\":22}")).readObject();
+		
+		//test update user
+		/*JsonObject userUpdateObject=Json.createReader(new StringReader("{\"username\":\"player\",\"password\":\"player\",\"name\":\"Lucifer\",\"email\":\"player@yahoo.com\",\"age\":22}")).readObject();
 		if(target.path("api/ssw/update/14").request(MediaType.TEXT_PLAIN).put(Entity.entity(userUpdateObject, MediaType.APPLICATION_JSON),Boolean.class)){
 			System.out.println("User was updated!");
 		}
 		else {
 			System.out.println("User wasn't updated!");
+		}*/
+		
+		//test insert in tank_picked
+		/*JsonObject tpObject=Json.createReader(new StringReader("{\"user\":\"seby_boss\",\"tank\":1}")).readObject();
+		if(target.path("api/ssw/inserttankpicked").request(MediaType.TEXT_PLAIN).post(Entity.entity(tpObject, MediaType.APPLICATION_JSON),Boolean.class)){
+			System.out.println("Line in tank_picked was inserted!");
 		}
+		else {
+			System.out.println("Line in tank_picked wasn't inserted!");
+		}*/
+		
+		//print table tank_picked GET
+		//System.out.println(target.path("api/ssw/gettankpicked").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class));
+		
+		//delete in tank_picked DELETE
+		/*if(target.path("api/ssw/deletetankpicked").path("seby_boss").request(MediaType.TEXT_PLAIN).accept(MediaType.APPLICATION_JSON).delete(Boolean.class)) {
+			System.out.println("Line in tank_picked was deleted!");
+		}else {
+			System.out.println("Line in tank_picked wasn't deleted!");
+		}*/
 		
 	}
 
