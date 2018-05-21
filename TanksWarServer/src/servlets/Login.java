@@ -8,6 +8,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +69,11 @@ public class Login extends HttpServlet {
 			session.setAttribute("user", n);
 			//setting session to expiry in 30 mins
 			session.setMaxInactiveInterval(30*60);
+			
+			Cookie userName = new Cookie("user", n);
+			userName.setMaxAge(30*60);
+			response.addCookie(userName);
+			
 			response.sendRedirect("index.jsp");
 		}
 		else {
