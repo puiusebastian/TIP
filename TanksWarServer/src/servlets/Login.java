@@ -78,7 +78,7 @@ public class Login extends HttpServlet {
 		}
 		else {
 			session.setAttribute("login_error", "*Invalid username or password!");
-			System.out.println("Not really Successful login");
+			System.out.println("Not really Succesful login");
 			response.sendRedirect("login.jsp");
 		}
 	    

@@ -51,7 +51,7 @@
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;<%}%>" >BUY</button>
-	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%> 
+	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%> 
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b2');" style="background:grey;">
@@ -63,7 +63,7 @@ tank=tanksSpec.getJsonObject(1);
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b3');" style="background:grey;">
@@ -75,7 +75,7 @@ tank=tanksSpec.getJsonObject(1);
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	</div>
@@ -152,7 +152,7 @@ tank=tanksSpec.getJsonObject(3);
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b5');" style="background:grey;">
@@ -164,7 +164,7 @@ tank=tanksSpec.getJsonObject(4);
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
 	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color:red; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	</div>

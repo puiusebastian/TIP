@@ -19,6 +19,19 @@
 				<p class="message">
 					Already registered? <a href="login.jsp">Sign In</a>
 				</p>
+				<% 				
+				Object error =  request.getSession().getAttribute("register_error");
+				//if the username or password are invalid
+				if(error!=null){
+%>
+				<div class="isa_error">
+					<p class="error">
+<%
+						out.println(error);
+						request.getSession().removeAttribute("register_error");
+					}
+%>
+					</p>
 			</form>
 		</div>
 	</div>
