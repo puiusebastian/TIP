@@ -45,7 +45,7 @@ public class DBManager {
 			st.execute("select * from Users");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Users user = new Users(rs.getInt("id"),rs.getString("username"),rs.getString("password"),rs.getString("name"),rs.getString("email"),rs.getInt("age"));
+				Users user = new Users(rs.getInt("id"),rs.getString("username"),rs.getString("password"),rs.getString("name"),rs.getString("email"),rs.getInt("age"),rs.getInt("money"),rs.getInt("games_played"),rs.getInt("games_won"));
 				usersList.add(user);
 			}
 			// st.close();
@@ -62,7 +62,7 @@ public class DBManager {
 			st.execute("select * from tanks");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
-				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("tank_range"),rs.getString("tank_name"));
+				Tanks tank = new Tanks(rs.getInt("tank_id"),rs.getInt("speed"),rs.getInt("health"),rs.getInt("damage"),rs.getInt("tank_range"),rs.getString("tank_name"),rs.getInt("price"));
 				tanksList.add(tank);
 			}
 			// st.close();
@@ -109,7 +109,7 @@ public class DBManager {
 	//insert User
 	public boolean insertU(JsonObject info) {
 		try(Statement st=conn.createStatement()){
-			st.execute("insert into users values(null,'"+info.getString("username")+"','"+info.getString("password")+"','"+info.getString("name")+"','"+info.getString("email")+"',"+info.getInt("age")+")");
+			st.execute("insert into users values(null,'"+info.getString("username")+"','"+info.getString("password")+"','"+info.getString("name")+"','"+info.getString("email")+"',"+info.getInt("age")+",0,0,0)");
 			return true;
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -153,7 +153,7 @@ public class DBManager {
 	//update user
 	public boolean updateU(int id,JsonObject info) {
 		try(Statement st=conn.createStatement()){
-			st.execute("update users set username='"+info.getString("username")+"',password='"+info.getString("password")+"',name='"+info.getString("name")+"',email='"+info.getString("email")+"',age="+info.getInt("age")+" where id="+id);
+			st.execute("update users set username='"+info.getString("username")+"',password='"+info.getString("password")+"',name='"+info.getString("name")+"',email='"+info.getString("email")+"',age="+info.getInt("age")+",money="+info.getInt("money")+" where id="+id);
 			return true;
 		}catch(SQLException e) {
 			e.printStackTrace();

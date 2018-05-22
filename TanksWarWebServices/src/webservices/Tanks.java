@@ -9,8 +9,9 @@ public class Tanks {
 	private int damage;
 	private int tank_range;
 	private String tank_name;
+	private int price;
 	
-	public Tanks(int id, int sp, int heal,int dam, int range, String name)
+	public Tanks(int id, int sp, int heal,int dam, int range, String name,int p)
 	{
 		this.tank_id=id;
 		this.speed=sp;
@@ -18,6 +19,7 @@ public class Tanks {
 		this.damage=dam;
 		this.tank_range=range;
 		this.tank_name=name;
+		this.price=p;
 	}
 	public int getId()
 	{
@@ -43,6 +45,9 @@ public class Tanks {
 	{
 		return this.tank_name;
 	}
+	public int getPrice() {
+		return this.price;
+	}
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Tank [id=").append(this.tank_id)
@@ -50,7 +55,7 @@ public class Tanks {
 			.append(", health=").append(this.health)
 			.append(", damage=").append(this.damage)
 			.append(", tank_range=").append(this.tank_range)
-			.append(", name=").append(this.tank_name).append("]");
+			.append(", name=").append(this.tank_name).append(", price=").append(this.price).append("]");
 		return builder.toString();
 	}
 }
