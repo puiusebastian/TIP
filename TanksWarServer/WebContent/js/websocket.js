@@ -7,10 +7,6 @@ var message;
 
 function connectToWebsocket() {
 	webSocket = new WebSocket("ws://localhost:8888/TanksWarServer/websocketendpoint");
-	
-	//var echoText = document.getElementById("echoText");
-	//echoText.value = "";
-	//var message = document.getElementById("message");
 
 	webSocket.onopen = function(message){ wsOpen(message);};
 	webSocket.onmessage = function(message){ wsGetMessage(message);};
@@ -49,4 +45,11 @@ function wsClose(message){
 
 function wserror(message){
 	//echoText.value += "Error ... \n";
+}
+
+function wsIsOpen() {
+	if(webSocket.readyState === webSocket.OPEN) {
+		return true;
+	}
+	return false;
 }

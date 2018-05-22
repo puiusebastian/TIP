@@ -24,6 +24,7 @@ var gameEnded = false;
 var winnerTeam = 0;
 var firstTeamFlagCapturedSeconds = 0;
 var secondTeamFlagCapturedSeconds = 0;
+var usernameSent = false;
 
 function gameLobby() {
 	loadGame();
@@ -53,6 +54,13 @@ function loadGame() {
 }
 
 function runGame() {
+	if(usernameSent == false) {
+		if(wsIsOpen() == true) {
+			wsSendMessage("username=" + getCookie("user"));
+			usernameSent = true;
+		}
+	}
+	
 	// Check if game ended
 	if(gameEnded == true) {
 		var result;
@@ -376,6 +384,7 @@ function gameUpdateBuffers(data) {
 		playersBuffer[i-1].fullHealth = dataArray[i].playerFullHealth;
 		playersBuffer[i-1].currentHealth = dataArray[i].playerCurrentHealth;
 		playersBuffer[i-1].movementDirection = dataArray[i].movementDirection;
+		playersBuffer[i-1].tankId = dataArray[i].tankId;
 	}
 	
 	missilesBuffer = [];

@@ -45,6 +45,7 @@ public class MessageEncoder implements Encoder.Text<Message[]> {
     			objectBuilder.add("kills", messages[i].getKills());
     			objectBuilder.add("deaths", messages[i].getDeaths());
     			objectBuilder.add("movementDirection", messages[i].getMovementDirection());
+    			objectBuilder.add("tankId", messages[i].getTankId());
     		}
     		arrayBuilder.add(objectBuilder);
     	}

@@ -20,6 +20,7 @@ public class Player {
 	private String username;
 	private int kills;
 	private int deaths;
+	private int tankId;
 	
 	public Player(int x, int y, int team) {
 		this.posX = x;
@@ -110,6 +111,10 @@ public class Player {
 	public String getUsername() {
 		return username;
 	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public int getKills() {
 		return kills;
@@ -163,6 +168,38 @@ public class Player {
 	public void revive() {
 		this.alive = true;
 		this.currentHealth = this.fullHealth;
+	}
+
+	public int getTankId() {
+		return tankId;
+	}
+
+	public void setTankId(int tankId) {
+		this.tankId = tankId;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public void setFullHealth(int fullHealth) {
+		this.fullHealth = fullHealth;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+
+	public int getSpeed() {
+		return speed;
 	}
 
 }

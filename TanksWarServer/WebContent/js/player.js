@@ -41,16 +41,16 @@ Player.prototype.draw = function() {
 		coords = getGraphicElementCoords("spritesheet_black_tank");
 		break;
 	case 2:
-		coords = getGraphicElementCoords("spritesheet_blue_tank");
-		break;
-	case 3:
-		coords = getGraphicElementCoords("spritesheet_green_tank");
-		break;
-	case 4:
 		coords = getGraphicElementCoords("spritesheet_red_tank");
 		break;
-	case 5:
+	case 3:
 		coords = getGraphicElementCoords("spritesheet_beige_tank");
+		break;
+	case 4:
+		coords = getGraphicElementCoords("spritesheet_green_tank");
+		break;
+	case 5:
+		coords = getGraphicElementCoords("spritesheet_blue_tank");
 		break;
 	}
 	

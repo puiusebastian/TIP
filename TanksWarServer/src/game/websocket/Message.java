@@ -13,6 +13,7 @@ public class Message {
 	private int kills;
 	private int deaths;
 	private String movementDirection;
+	private int tankId;
 	private int numberOfPlayers;
 	private int numberOfMissiles;
 	private int tileSize;
@@ -198,6 +199,12 @@ public class Message {
 	}
 	public void setSecondTeamFlagCapturedSeconds(int secondTeamFlagCapturedSeconds) {
 		this.secondTeamFlagCapturedSeconds = secondTeamFlagCapturedSeconds;
+	}
+	public int getTankId() {
+		return tankId;
+	}
+	public void setTankId(int tankId) {
+		this.tankId = tankId;
 	}
 	
 }

@@ -49,7 +49,7 @@
 	    </ul> 
 	  </div>
 	</nav>
-<%		Object tank =  request.getSession().getAttribute((String)username); 
+<%		Object tank =  request.getSession().getAttribute((String)username);
 		if( !(tank != null)){
 			t=tanksSpec.getJsonObject(0);
 %>

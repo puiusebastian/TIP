@@ -8,6 +8,7 @@ import org.joda.time.Period;
 
 import game.Missile;
 import game.Player;
+import servlets.TankPicked;
 
 public class PushTimeService implements Runnable {
     
@@ -122,7 +123,7 @@ public class PushTimeService implements Runnable {
     		posY = player.getPosY() + playerTileSize/2 - missileTileSize/2;
     		break;
     	}
-    	Missile missile = new Missile(session, posX, posY, player.getRange(), player.getMovementDirection(), 3);
+    	Missile missile = new Missile(session, posX, posY, player.getRange(), player.getMovementDirection(), player.getSpeed() + 1);
     	missilesList.add(missile);
     }
     
@@ -173,6 +174,20 @@ public class PushTimeService implements Runnable {
     		player.moveLeft = false;
     		player.moveRight = false;
     	}
+    }
+    
+    public static void setUsername(Session session, String username) {
+    	Player player = playersMap.get(session);
+    	player.setUsername(username);
+    	
+    	TankPicked tp = new TankPicked(username);
+    	System.out.println(tp.tank_id);
+    	player.setTankId(tp.tank_id);
+    	player.setSpeed(tp.speed);
+    	player.setFullHealth(tp.health);
+    	player.setCurrentHealth(tp.health);
+    	player.setDamage(tp.damage);
+    	player.setRange(tp.tank_range);
     }
     
     private static void checkMissilesCollisionWithPlayers() {
@@ -440,6 +455,7 @@ public class PushTimeService implements Runnable {
                 	messages[index].setKills(player.getKills());
                 	messages[index].setDeaths(player.getDeaths());
                 	messages[index].setMovementDirection(player.getMovementDirection());
+                	messages[index].setTankId(player.getTankId());
                 	
                 	index++;
                 }
