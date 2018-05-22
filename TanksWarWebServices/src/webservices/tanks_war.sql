@@ -38,3 +38,18 @@ CONSTRAINT user_pk PRIMARY key(user),
 CONSTRAINT user_fk FOREIGN key (user) references users(username),
 CONSTRAINT tank_fk FOREIGN key (tank) references tanks(tank_id));
 
+ALTER table users add money INT unsigned NOT NULL;
+ALTER table users add games_played INT unsigned NOT NULL;
+ALTER table users add games_won INT unsigned NOT NULL;
+
+ALTER table tanks add price INT unsigned NOT NULL;
+
+UPDATE tanks set price='1000' where tank_id=1;
+UPDATE tanks set price='1500' where tank_id=2;
+UPDATE tanks set price='2500' where tank_id=3;
+UPDATE tanks set price='2700' where tank_id=4;
+UPDATE tanks set price='2800' where tank_id=5;
+UPDATE tanks set price='3100' where tank_id=6;
+UPDATE tanks set price='3500' where tank_id=7;
+UPDATE tanks set price='4050' where tank_id=8;
+
