@@ -47,10 +47,9 @@ public class Logout extends HttpServlet {
 	    
 	    Object username =  request.getSession().getAttribute("user");
 	    
+
 	    if(target.path("api/ssw/deletetankpicked").path((String) username).request(MediaType.TEXT_PLAIN).accept(MediaType.APPLICATION_JSON).delete(Boolean.class)) {
-			System.out.println("Line in tank_picked was deleted!");
-		}else {
-			System.out.println("Line in tank_picked wasn't deleted!");
+			//System.out.println("Line in tank_picked was deleted!");
 		}
 	    session.setAttribute( (String) username, null); 
 	    

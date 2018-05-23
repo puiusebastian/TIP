@@ -4,10 +4,42 @@
 <%@page import="javax.json.JsonObject"%>
 <%@page import="javax.json.JsonArray"%>
 <%@ page import="servlets.TanksHelper" %>
+<%@ page import="servlets.UserTankHelper" %>
+<%@ page import="servlets.UsersHelper" %>
 <%		Object username =  request.getSession().getAttribute("user");        
-		if( username != null){												
-			JsonArray tanksSpec = TanksHelper.GetTanks();
-			JsonObject t;
+		if( username != null){							
+			Boolean ok;
+			JsonArray tanksSpec = TanksHelper.GetTanks();	
+			JsonArray users_tanks = UserTankHelper.GetUsersTanks();
+			JsonArray users=UsersHelper.GetUsers();
+			Integer id=-1,j=0;
+			Integer []tanksarray=new Integer[5];
+
+			JsonObject user,t;
+			
+			for(int i=0;i<users.size();i++){              //get te user_id using usernamesession variable
+				user=users.getJsonObject(i);
+				if(user.getString("username").equals(username)){
+					id=user.getInt("id");
+				}
+			}
+
+			for(int i=0;i<users_tanks.size();i++)
+			{
+				user=users_tanks.getJsonObject(i);
+				if(user.getInt("UT_userId")==id){
+					tanksarray[j]=user.getInt("UT_tankId");  // get the user tanks available into an array
+					j++;
+				}
+			}
+			if(j==0){  										//in case of the user does not have any tanks
+				j=4;
+				out.println("pe if");
+				tanksarray[0]=0;
+				tanksarray[1]=0;
+				tanksarray[2]=0;
+				tanksarray[3]=0;
+			}
 %>
 <!DOCTYPE html PUBLIC>
 <html>
@@ -60,27 +92,59 @@
             		<img src="css/tank_dark.png" height="280" width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
             	</label>  
-        	<% t=tanksSpec.getJsonObject(1);%>    
+<%
+t=tanksSpec.getJsonObject(1);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==2){
+		ok=true;
+	}
+}
+%>    
             	<label class="column">
-            		<input type='radio' name="tank" value=2>
+            		<input type='radio' name="tank" value=2 <%if(!ok){%>disabled<%} %>>
             		<img src="css/tank_red.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
             	</label>
-            <% t=tanksSpec.getJsonObject(2);%>
+<%
+t=tanksSpec.getJsonObject(2);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==3){
+		ok=true;
+	}
+}
+%> 
                 <label class="column">
-                    <input type='radio' name="tank" value=3>
+                    <input type='radio' name="tank" value=3 <%if(!ok){%>disabled<%} %>>
                     <img src="css/tank_sand.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label>
-            <% t=tanksSpec.getJsonObject(3);%>
+<%
+t=tanksSpec.getJsonObject(3);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==4){
+		ok=true;
+	}
+}
+%> 
                 <label class="column">
-                    <input type='radio' name="tank" value=4>
+                    <input type='radio' name="tank" value=4 <%if(!ok){%>disabled<%} %>>
                     <img src="css/tank_green.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label>
-            <% t=tanksSpec.getJsonObject(4);%>
+<%
+t=tanksSpec.getJsonObject(4);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==5){
+		ok=true;
+	}
+}
+%> 
                 <label class="column">
-                    <input type='radio' name="tank" value=5>
+                    <input type='radio' name="tank" value=5 <%if(!ok){%>disabled<%} %>>
                     <img src="css/tank_blue.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label><br><br><br><br><br><br>
@@ -109,9 +173,12 @@
 		</div>
 	</section>
 	<form method="post" action="EndGame" style="position: relative">
-	<button type="submit" class="btn btn-primary btn-endgame">End Game</button>
+	<button type="submit" id="submit_button" class="btn btn-primary btn-endgame">End Game</button>
 	</form>
-	<script>gameLobby()</script>
+	<script>
+	$("input:radio").change(function () {$("#submit_button").prop("disabled", false);});
+		gameLobby()
+	</script>
 </body>
 </html>
 <%}}else{response.sendRedirect("login.jsp");} %>

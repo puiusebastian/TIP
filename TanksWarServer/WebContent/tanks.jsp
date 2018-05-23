@@ -4,11 +4,42 @@
 <%@page import="javax.json.JsonObject"%>
 <%@page import="javax.json.JsonArray"%>
 <%@ page import="servlets.TanksHelper" %>
+<%@ page import="servlets.UserTankHelper" %>
+<%@ page import="servlets.UsersHelper" %>
 
 <%		Object username =  request.getSession().getAttribute("user"); 
-		if( username != null){ 
-			JsonArray tanksSpec = TanksHelper.GetTanks();
-			JsonObject tank;
+		if( username != null){ 	
+			Boolean ok;
+			JsonArray tanksSpec = TanksHelper.GetTanks();   
+			JsonArray users_tanks = UserTankHelper.GetUsersTanks();
+			JsonArray users=UsersHelper.GetUsers();
+			Integer id=-1,j=0;
+			Integer []tanksarray=new Integer[5];
+
+			JsonObject user,tank;
+			
+			for(int i=0;i<users.size();i++){              //get te user_id using usernamesession variable
+				user=users.getJsonObject(i);
+				if(user.getString("username").equals(username)){
+					id=user.getInt("id");
+				}
+			}
+
+			for(int i=0;i<users_tanks.size();i++)
+			{
+				user=users_tanks.getJsonObject(i);
+				if(user.getInt("UT_userId")==id){
+					tanksarray[j]=user.getInt("UT_tankId");  // get the user tanks available into an array
+					j++;
+				}
+			}
+			if(j==0){  										//in case of the user does not have any tanks
+				j=4;
+				tanksarray[0]=0;
+				tanksarray[1]=0;
+				tanksarray[2]=0;
+				tanksarray[3]=0;
+			}
 %>
 <!DOCTYPE html>
 <html>
@@ -50,7 +81,6 @@
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;<%}%>" >BUY</button>
 	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%> 
 	    </form>
 	  </div>
@@ -58,23 +88,35 @@
 	    <img src="css/tank_red.png">
 <%
 tank=tanksSpec.getJsonObject(1);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==2){
+		ok=true;
+	}
+}
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
 	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b3');" style="background:grey;">
 	    <img src="css/tank_sand.png">
 <%
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==3){
+		ok=true;
+	}
+}
 	tank=tanksSpec.getJsonObject(2);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
 	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
@@ -90,7 +132,7 @@ tank=tanksSpec.getJsonObject(0);
 	   <p>health: <%out.println(tank.getInt("health")); %></p>
 	   <p>damage: <%out.println(tank.getInt("damage")); %></p>
 	   <p>range:<%out.println(tank.getInt("range")); %></p>
-	   <p>price:</p>
+	   <p>price:<%out.println(tank.getInt("price")); %></p>
 	</div>
 <%
 tank=tanksSpec.getJsonObject(1);
@@ -102,7 +144,7 @@ tank=tanksSpec.getJsonObject(1);
 	  <p>health: <%out.println(tank.getInt("health")); %></p>
 	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
 	  <p>range:<%out.println(tank.getInt("range")); %></p>
-	  <p>price:</p>
+	  <p>price:<%out.println(tank.getInt("price")); %></p>
 	</div>
 <%
 tank=tanksSpec.getJsonObject(2);
@@ -114,7 +156,7 @@ tank=tanksSpec.getJsonObject(2);
 	  <p>health: <%out.println(tank.getInt("health")); %></p>
 	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
 	  <p>range:<%out.println(tank.getInt("range")); %></p>
-	   <p>price:</p>
+	   <p>price:<%out.println(tank.getInt("price")); %></p>
 	</div>
 <%
 tank=tanksSpec.getJsonObject(3);
@@ -126,7 +168,7 @@ tank=tanksSpec.getJsonObject(3);
 	  <p>health: <%out.println(tank.getInt("health")); %></p>
 	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
 	  <p>range:<%out.println(tank.getInt("range")); %></p>
-	   <p>price:</p>
+	   <p>price:<%out.println(tank.getInt("price")); %></p>
 	</div>
 <%
 tank=tanksSpec.getJsonObject(4);
@@ -138,7 +180,7 @@ tank=tanksSpec.getJsonObject(4);
 	  <p>health: <%out.println(tank.getInt("health")); %></p>
 	  <p>damage: <%out.println(tank.getInt("damage")); %></p>
 	  <p>range:<%out.println(tank.getInt("range")); %></p>
-	   <p>price:</p>
+	   <p>price:<%out.println(tank.getInt("price")); %></p>
 	</div>
 	
 	
@@ -147,11 +189,17 @@ tank=tanksSpec.getJsonObject(4);
 	    <img src="css/tank_green.png">
 <%
 tank=tanksSpec.getJsonObject(3);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==4){
+		ok=true;
+	}
+}
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
 	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>
@@ -159,11 +207,17 @@ tank=tanksSpec.getJsonObject(3);
 	    <img src="css/tank_blue.png">
 <%
 tank=tanksSpec.getJsonObject(4);
+ok=false;
+for(int i=0;i<j;i++){
+	if(tanksarray[i]==5){
+		ok=true;
+	}
+}
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
 	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<button type="submit" class="btn" <%if(false){%>style="visibility: hidden;" <%}%>>BUY</button>
+	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
 	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
 	    </form>
 	  </div>

@@ -43,14 +43,15 @@
 		<thead>
 	      <tr>
 	        <th>USER</th>
-	        <th>Points</th>
+	        <th>Games played</th>
+	        <th>Games won</th>
 	      </tr>
 	      <tbody>
 <%
 for(int i=0;i<users.size();i++)
 {
 	user=users.getJsonObject(i);
-	out.println("<tr><td>"+user.getString("username")+"</td><td>"+user.getInt("age")+"</td></tr>");
+	out.println("<tr><td>"+user.getString("username")+"</td><td>"+user.getInt("gamesPlayed")+"</td><td>"+user.getInt("gamesPlayed")+"</td></tr>");
 }
 %>
 		  </tbody>
