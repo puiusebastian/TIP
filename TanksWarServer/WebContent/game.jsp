@@ -34,7 +34,6 @@
 			}
 			if(j==0){  										//in case of the user does not have any tanks
 				j=4;
-				out.println("pe if");
 				tanksarray[0]=0;
 				tanksarray[1]=0;
 				tanksarray[2]=0;
@@ -176,7 +175,6 @@ for(int i=0;i<j;i++){
 	<button type="submit" id="submit_button" class="btn btn-primary btn-endgame">End Game</button>
 	</form>
 	<script>
-	$("input:radio").change(function () {$("#submit_button").prop("disabled", false);});
 		gameLobby()
 	</script>
 </body>

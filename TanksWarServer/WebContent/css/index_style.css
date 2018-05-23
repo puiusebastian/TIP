@@ -7,8 +7,18 @@ body {
    background: url("images5.jpg") no-repeat center center fixed; 
    -webkit-background-size: cover;
   -moz-background-size: cover;
-  -o-background-size: cover;
-   
+  -o-background-size: cover;  
+}
+
+header p{
+	font-family: "Arial Black", Gadget, sans-serif;
+    text-align: center;
+    font-size:30px;
+}
+
+.play_button{
+  float:right;
+
 }
 
 container{
