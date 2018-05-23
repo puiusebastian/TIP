@@ -49,6 +49,7 @@ public class DBManager {
 				usersList.add(user);
 			}
 			// st.close();
+			System.out.println("Am ajuns la DBManager!");
 			return usersList;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,15 +119,26 @@ public class DBManager {
 	}
 	
 	//insert in tank_picked
-		public boolean insertTP(JsonObject info) {
-			try(Statement st=conn.createStatement()){
-				st.execute("insert into tank_picked values('"+info.getString("user")+"',"+info.getInt("tank")+")");
-				return true;
-			}catch(SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+	public boolean insertTP(JsonObject info) {
+		try(Statement st=conn.createStatement()){
+			st.execute("insert into tank_picked values('"+info.getString("user")+"',"+info.getInt("tank")+")");
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
+	}
+	
+	//insert in user_tank
+	public boolean insertUT(JsonObject info) {
+		try(Statement st=conn.createStatement()){
+			st.execute("insert into user_tank values('"+info.getString("user_id")+"',"+info.getInt("tank_id")+")");
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 	//delete user
 	public boolean deleteU(int id) {
@@ -160,4 +172,26 @@ public class DBManager {
 			return false;
 		}
 	}
+	
+	//update money
+	public boolean updateMoney(int id,int money) {
+		try(Statement st=conn.createStatement()){
+			st.execute("update users set money=money+"+money+" where id="+id);
+			return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//update games played and won
+		public boolean updatePlayedWonGames(int id,JsonObject info) {
+			try(Statement st=conn.createStatement()){
+				st.execute("update users set games_played=games_played+"+info.getInt("games_played")+",game_won=games_won+"+info.getInt("games_won")+" where id="+id);
+				return true;
+			}catch(SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
 }

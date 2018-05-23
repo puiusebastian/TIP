@@ -15,6 +15,7 @@ public class WebServices {
 	@Path("/getUsers")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Users> getUsers(){
+		System.out.println("Am ajuns la serviciu!");
 		return DBManager.getInstance().getUsersList();
 	}
 	
@@ -63,6 +64,15 @@ public class WebServices {
 	public boolean insertTankPicked(JsonObject info)
 	{
 		return DBManager.getInstance().insertTP(info);
+	}
+	
+	//insert in user_tank
+	@POST
+	@Path("/insertusertank")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean insertUserTank(JsonObject info)
+	{
+		return DBManager.getInstance().insertUT(info);
 	}
 	
 

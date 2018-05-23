@@ -35,13 +35,19 @@ public class ClientTest {
 				.post(Entity.entity(jsonObject,MediaType.APPLICATION_JSON),Boolean.class));
 		
 		
-		System.out.println(target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(String.class));
-		System.out.println(target.path("api/ssw/getTanks").request().accept(MediaType.APPLICATION_JSON).get(String.class));
+		/*System.out.println(target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(String.class));
+		System.out.println(target.path("api/ssw/getTanks").request().accept(MediaType.APPLICATION_JSON).get(String.class));*/
 		//save list
 		//List<Users> users=new ArrayList<Users>();
-		JsonArray tanks;
-		tanks=target.path("api").path("ssw").path("getTanks").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
-		System.out.println("huraa >> "+tanks);//display all jsonArray
+		
+		JsonArray users;
+		users=target.path("api").path("ssw").path("getUsers").request().accept(MediaType.APPLICATION_JSON).get(JsonArray.class);
+		for(JsonValue user:users)
+		{
+			JsonObject js=(JsonObject) user;
+			System.out.println(user);
+		}
+		
 		
 		//test insert user
 		/*JsonObject userObject=Json.createReader(new StringReader("{\"username\":\"player\",\"password\":\"player\",\"name\":\"player\",\"email\":\"player@yahoo.com\",\"age\":22}")).readObject();
