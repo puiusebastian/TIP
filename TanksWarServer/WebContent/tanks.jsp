@@ -7,7 +7,7 @@
 <%@ page import="servlets.UserTankHelper" %>
 <%@ page import="servlets.UsersHelper" %>
 
-<%		Object username =  request.getSession().getAttribute("user"); 
+<%		Object money_error,username =  request.getSession().getAttribute("user"); 
 		if( username != null){ 	
 			Boolean ok;
 			JsonArray tanksSpec = TanksHelper.GetTanks();   
@@ -79,27 +79,26 @@
 	tank=tanksSpec.getJsonObject(0);
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
-	    <form action="BuyTank" method="post">
-	    	<input type='text' name='price' value='45' hidden=true/>
-	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%> 
-	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b2');" style="background:grey;">
 	    <img src="css/tank_red.png">
 <%
-tank=tanksSpec.getJsonObject(1);
-ok=false;
-for(int i=0;i<j;i++){
-	if(tanksarray[i]==2){
-		ok=true;
+	tank=tanksSpec.getJsonObject(1);
+	ok=false;
+	for(int i=0;i<j;i++){
+		if(tanksarray[i]==2){
+			ok=true;
+		}
 	}
-}
+	money_error =  request.getSession().getAttribute("no_money_"+tank.getInt("id"));
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
-	    	<input type='text' name='price' value='45' hidden=true/>
+	    	<input type='text' name='price' value=<% out.println(tank.getInt("price"));%> hidden=true/>
+	    	<input type='text' name='tank' value=<% out.println(tank.getInt("id"));%> hidden=true/>
 	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(money_error!=null){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p>
+	    	<%} request.getSession().removeAttribute("no_money_"+tank.getInt("id"));%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b3');" style="background:grey;">
@@ -112,12 +111,15 @@ for(int i=0;i<j;i++){
 	}
 }
 	tank=tanksSpec.getJsonObject(2);
+	money_error =  request.getSession().getAttribute("no_money_"+tank.getInt("id"));
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
-	    	<input type='text' name='price' value='45' hidden=true/>
+	    	<input type='text' name='price' value=<% out.println(tank.getInt("price"));%> hidden=true/>
+	    	<input type='text' name='tank' value=<% out.println(tank.getInt("id"));%> hidden=true/>
 	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(money_error!=null){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p>
+	    	<%} request.getSession().removeAttribute("no_money_"+tank.getInt("id"));%>
 	    </form>
 	  </div>
 	</div>
@@ -195,12 +197,15 @@ for(int i=0;i<j;i++){
 		ok=true;
 	}
 }
+money_error =  request.getSession().getAttribute("no_money_"+tank.getInt("id"));
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
-	    	<input type='text' name='price' value='45' hidden=true/>
+	    	<input type='text' name='price' value=<% out.println(tank.getInt("price"));%> hidden=true/>
+	    	<input type='text' name='tank' value=<% out.println(tank.getInt("id"));%> hidden=true/>
 	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(money_error!=null){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p>
+	    	<%} request.getSession().removeAttribute("no_money_"+tank.getInt("id"));%>
 	    </form>
 	  </div>
 	  <div class="column" onclick="openTab('b5');" style="background:grey;">
@@ -213,12 +218,15 @@ for(int i=0;i<j;i++){
 		ok=true;
 	}
 }
+money_error =  request.getSession().getAttribute("no_money_"+tank.getInt("id"));
 %>
 	    <p><%out.println(tank.getString("name")); %></p>
 	    <form action="BuyTank" method="post">
-	    	<input type='text' name='price' value='45' hidden=true/>
+	    	<input type='text' name='price' value=<% out.println(tank.getInt("price"));%> hidden=true/>
+	    	<input type='text' name='tank' value=<% out.println(tank.getInt("id"));%> hidden=true/>
 	    	<button type="submit" class="btn" <%if(ok){%>style="visibility: hidden;" <%}%>>BUY</button>
-	    	<%if(true){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p><%}%>
+	    	<%if(money_error!=null){%><p style="color: #8B0000; font-size:12px">*You don't have enough money to buy this tank!</p>
+	    	<%} request.getSession().removeAttribute("no_money_"+tank.getInt("id"));%>
 	    </form>
 	  </div>
 	</div>

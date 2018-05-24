@@ -187,7 +187,7 @@ public class DBManager {
 	//update games played and won
 		public boolean updatePlayedWonGames(int id,JsonObject info) {
 			try(Statement st=conn.createStatement()){
-				st.execute("update users set games_played=games_played+"+info.getInt("games_played")+",game_won=games_won+"+info.getInt("games_won")+" where id="+id);
+				st.execute("update users set games_played=games_played+"+info.getInt("games_played")+",games_won=games_won+"+info.getInt("games_won")+" where id="+id);
 				return true;
 			}catch(SQLException e) {
 				e.printStackTrace();

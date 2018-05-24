@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 public class SSWUpdatePlayedAndWonGames {
 	//update money with a certain value
 	@PUT
-	@Path("{money}")
+	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean updateRanks(@PathParam("id") String id,JsonObject info)
 	{
