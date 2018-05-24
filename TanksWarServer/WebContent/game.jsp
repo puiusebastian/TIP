@@ -147,9 +147,15 @@ for(int i=0;i<j;i++){
                     <img src="css/tank_blue.png" height="280 " width="250">
                     <p class="tank_name"><%out.println(t.getString("name")); %></p>
                 </label><br><br><br><br><br><br>
-                <button class="submit btn btn-primary btn-block" type="submit">Start Game</button>
+                <button id="submit_button" class="submit btn btn-primary btn-block" type="submit" disabled="disabled" name="submit">Start Game</button>
         </form>
     </div>
+    
+<script>
+	$("input:radio").change(function () {
+	    $("#submit_button").attr("disabled", false);
+	});
+</script>
     
 <%}else{%>
 	<section id="game_section">
