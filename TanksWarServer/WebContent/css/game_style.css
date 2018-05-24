@@ -40,5 +40,6 @@ img{
 .btn-endgame{
 	position: absolute;
 	right: 10px;
-	font-size:25px;
+	font-size:25px !important;
+	bottom:1px;
 }
