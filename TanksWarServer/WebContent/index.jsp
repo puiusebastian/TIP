@@ -2,7 +2,6 @@
     pageEncoding="ISO-8859-1"
 %>
 <%@ page import="servlets.TankPicked" %>
-<%@ page import="servlets.UpdateStats" %>
 <%		Object username =  request.getSession().getAttribute("user"); 
 		if( username != null){
 %>
