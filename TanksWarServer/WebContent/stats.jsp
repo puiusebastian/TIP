@@ -45,13 +45,14 @@
 	        <th>USER</th>
 	        <th>Games played</th>
 	        <th>Games won</th>
+	        <th>Money</th>
 	      </tr>
 	      <tbody>
 <%
 for(int i=0;i<users.size();i++)
 {
 	user=users.getJsonObject(i);
-	out.println("<tr><td>"+user.getString("username")+"</td><td>"+user.getInt("gamesPlayed")+"</td><td>"+user.getInt("gamesPlayed")+"</td></tr>");
+	out.println("<tr><td>"+user.getString("username")+"</td><td>"+user.getInt("gamesPlayed")+"</td><td>"+user.getInt("gamesWon")+"</td><td>"+user.getInt("money")+"</td></tr>");
 }
 %>
 		  </tbody>
@@ -61,7 +62,7 @@ for(int i=0;i<users.size();i++)
 
 	<footer class="page-footer font-small blue pt-4 mt-4">
 		<div class="footer-copyright py-3 text-center">
-        	© 2018 Copyright -- Petrasco Ilie, Puiu Sebastian, Ungureanu Ionut, Garila Maria
+        	© 2018 Copyright -- Petrasco Ilie, Puiu Sebastian, Ungureanu Ionut, Gavrila Maria
     	</div>
 	</footer>
 </body>

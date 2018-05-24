@@ -233,7 +233,7 @@ money_error =  request.getSession().getAttribute("no_money_"+tank.getInt("id"));
 	
 	<footer class="page-footer font-small blue pt-4 mt-4">
 		<div class="footer-copyright py-3 text-center">
-        	© 2018 Copyright -- Petrasco Ilie, Puiu Sebastian, Ungureanu Ionut, Garila Maria
+        	© 2018 Copyright -- Petrasco Ilie, Puiu Sebastian, Ungureanu Ionut, Gavrila Maria
     	</div>
 	</footer>
 	
