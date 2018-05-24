@@ -9,6 +9,7 @@ import org.joda.time.Period;
 import game.Missile;
 import game.Player;
 import servlets.TankPicked;
+import servlets.UpdateStats;
 
 public class PushTimeService implements Runnable {
     
@@ -188,6 +189,8 @@ public class PushTimeService implements Runnable {
     	player.setCurrentHealth(tp.health);
     	player.setDamage(tp.damage);
     	player.setRange(tp.tank_range);
+    	
+    	UpdateStats.UpdateGamesNumber(username, 1, 0);
     }
     
     private static void checkMissilesCollisionWithPlayers() {
@@ -358,6 +361,14 @@ public class PushTimeService implements Runnable {
 	    				winnerTeam = 0;
 	    			}
 	    			gameEndedTime = new DateTime();
+	    			if(firstTeamNumberOfPlayers > 0 && secondTeamNumberOfPlayers > 0) {
+		    			for(Player player : playersMap.values()) {
+		    				if(player.getTeam() == winnerTeam) {
+		    					UpdateStats.UpdateGamesNumber(player.getUsername(), 0, 1);
+		    					UpdateStats.UpdateMoney(player.getUsername(), 20);
+		    				}
+		    			}
+	    			}
 	    			return;
 	    		}
 	    		
